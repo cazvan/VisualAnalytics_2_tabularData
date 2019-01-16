@@ -1,0 +1,1479 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{}
+    \pretitle{\vspace{\droptitle}}
+  \posttitle{}
+    \author{}
+    \preauthor{}\postauthor{}
+    \date{}
+    \predate{}\postdate{}
+  
+
+\begin{document}
+
+\subsection{Course: Visual Analytics for Policy and
+Management}\label{course-visual-analytics-for-policy-and-management}
+
+\subsubsection{Prof.~José Manuel Magallanes,
+PhD}\label{prof.jose-manuel-magallanes-phd}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\section{Part 2: Visualizing Tabular
+data}\label{part-2-visualizing-tabular-data}
+
+\subsubsection{Univariate Case}\label{univariate-case}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Contents:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \protect\hyperlink{part1}{Intro.}
+\item
+  \protect\hyperlink{part2}{Data Types.}
+\item
+  \protect\hyperlink{part3}{Data Processes.}
+
+  3.1 \protect\hyperlink{part31}{Classification.}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \protect\hyperlink{part311}{Nominal Data.}
+  \item
+    \protect\hyperlink{part312}{Ordinal Data.}
+  \end{itemize}
+
+  3.2 \protect\hyperlink{part32}{Counting.}
+
+  3.3 \protect\hyperlink{part33}{Measurement.}
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Most data are commonly organized in tabular format, that is, tables.
+When data is in tabular format, cases are organized in rows, while
+variables (information about the cases) are organized in columns. Almost
+every data you have used in a spreadsheet follows that structure.
+
+For example, when you visit the \href{https://nces.ed.gov/ccd/}{website}
+of the Common Core of Data from the US Department of Education, you can
+get a data set with detailed information on public schools at the state
+of Washington. Let me get a data table I have based on that:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{link=}\StringTok{'https://github.com/EvansDataScience/VisualAnalytics_2_tabularData/raw/master/data/eduwa.rda'}
+
+\CommentTok{#getting the data TABLE from the file in the cloud:}
+\KeywordTok{load}\NormalTok{(}\DataTypeTok{file=}\KeywordTok{url}\NormalTok{(link))}
+\end{Highlighting}
+\end{Shaded}
+
+When you are in RStudio, you can view the data table by clicking on its
+name at the \emph{Environment} .
+
+It also good to know \emph{how much} info you have:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#number of rows and columns}
+\KeywordTok{dim}\NormalTok{(eduwa) }\CommentTok{#nrow(eduwa) ncol(eduwa)}
+\end{Highlighting}
+\end{Shaded}
+
+This is the list of the 24 columns:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{names}\NormalTok{(eduwa)}
+\end{Highlighting}
+\end{Shaded}
+
+When dealing with tabular data, you can suspect that you can produce a
+visualization for each column, and then for a couple of them
+simultaneously, and then for three or more.
+
+In this material, we will pay attention to the \emph{univariate} case;
+which is common for searching problems or veryfing outcomes; not for
+giving explanations. Then, when dealing with univariate data, you need
+to be aware of two things: \emph{what question you are trying to
+answer}; and \emph{how to treat a particular variable} to build the plot
+that will answer that question.
+
+\protect\hyperlink{part1}{Go to table of contents.}
+
+\subsection{Data Types}\label{data-types}
+
+I can not anticipate all the questions you can try to answer via plots;
+but I can tell you that you are always limited by the \textbf{nature} of
+the variables you have at hand. Generally speaking, you have either
+\emph{categorical} or \emph{numerical} data in each column, and whatever
+question you have, you first need to know how that variable you are
+planing to use has been encoded, so you can plan the treatment. In R, we
+can know that like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# this 'width = 70,strict.width='cut' means}
+\CommentTok{# you do not want to see more than 70 characters per row.}
+
+\KeywordTok{str}\NormalTok{(eduwa,}\DataTypeTok{width =} \DecValTok{70}\NormalTok{,}\DataTypeTok{strict.width=}\StringTok{'cut'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The ones that say \textbf{num} are obviously numbers (numbers in R are
+\emph{numeric} when decimal values are detected, and \emph{integer} if
+they are not). The ones that say \textbf{chr} are strings, which are
+\emph{candidates} to be \textbf{key} columns, which are not variables
+themselves, but identifiers of the cases. In this case, the first four
+are identifiers, as well as the the 7th, 10th and 15th columns
+(\emph{school names}, \emph{address} and \emph{phone}, respectively).
+Those variables are not to be analyzed statistically, but may be used
+for annotating (7th and 15th column) or for geocoding (10th column).
+Notice that for these data, \emph{State} is not to be analyzed as it is
+a constant (all rows are from WA); but it would be if the data were from
+the whole USA. Then, you see several variables identified as
+\emph{factor} or \emph{ordered factor}, which are categorical variables:
+they can be analyzed statistically but not in the same way that numbers.
+
+\protect\hyperlink{part1}{Go to table of contents.}
+
+\subsection{Data Processes}\label{data-processes}
+
+Data is obtained via different processes. When you observe reality, you
+can \emph{classsify}, \emph{count} or \emph{measure}. Each of these
+decisions produces data with some basic characteristics; which are
+represented via categories or numerical values.
+
+\subsubsection{Classification}\label{classification}
+
+Categorical data are the output of the classification process. The
+classification can propose an incremental or non-incremental
+differentiation. The former are named ordinal data and the latter
+nominal data. A nominal classification related to education can be type
+of school funding: public or private; while an ordinal one can be:
+elementary, middle, high, college and graduate school level.
+
+\paragraph{\texorpdfstring{{ 1. Visualization for nominal
+scales}}{ 1. Visualization for nominal scales}}\label{visualization-for-nominal-scales}
+
+Let's see some raw values in the variable \emph{\textbf{LocaleType}}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(eduwa}\OperatorTok{$}\NormalTok{LocaleType,}\DecValTok{50}\NormalTok{) }\CommentTok{#first fifty values}
+\end{Highlighting}
+\end{Shaded}
+
+You can not get a clear idea of what a data table has, so a simple
+\textbf{frequency table} is the first tool to see what these nominal
+data are telling us:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# absolute values}
+\KeywordTok{table}\NormalTok{(eduwa}\OperatorTok{$}\NormalTok{LocaleType,}\DataTypeTok{exclude =} \StringTok{'nothing'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# relative values}
+\NormalTok{absoluteT=}\KeywordTok{table}\NormalTok{(eduwa}\OperatorTok{$}\NormalTok{LocaleType,}\DataTypeTok{exclude =} \StringTok{'nothing'}\NormalTok{)}
+\KeywordTok{prop.table}\NormalTok{(absoluteT)}
+\end{Highlighting}
+\end{Shaded}
+
+This table tells us the location of the public schools. What is the
+right visual for this? Sometimes the answer seems obvious, as tradition
+or habits give so much weight to decisions. Let's use the very well
+known \textbf{pie chart}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# the pie plots the table:}
+\NormalTok{ToPlot=}\KeywordTok{prop.table}\NormalTok{(absoluteT)}
+\KeywordTok{pie}\NormalTok{(ToPlot)}
+\end{Highlighting}
+\end{Shaded}
+
+You should always keep it simple. Then decorate. For example, you can
+start improving the plot you already \emph{have}:
+
+\begin{itemize}
+\tightlist
+\item
+  The purple sector does not show a label:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{names}\NormalTok{(ToPlot)}
+\end{Highlighting}
+\end{Shaded}
+
+We could alter the fifth label:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{names}\NormalTok{(ToPlot)[}\DecValTok{5}\NormalTok{]=}\StringTok{'Unknown'}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Our plot did not have a title. Titles (and subtitles) are important.
+  To give a title, it can be a \emph{question} to be answered by the
+  plot:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# the pie plots the table:}
+\NormalTok{titleText=}\StringTok{'Where are Public Schools located in WA in 2019?'}
+\NormalTok{sourceText=}\StringTok{'Source: US Department of Education'}
+
+\KeywordTok{pie}\NormalTok{(ToPlot,}
+    \DataTypeTok{main=}\NormalTok{titleText,}
+    \DataTypeTok{sub=}\NormalTok{sourceText)}
+\end{Highlighting}
+\end{Shaded}
+
+The title can \emph{guide} the reader to recognise the purpose of your
+plot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# the pie plots the table:}
+\NormalTok{titleText2=}\StringTok{'WA still has schools locations unknown }\CharTok{\textbackslash{}n}\StringTok{ (info from 2018)'}
+
+\KeywordTok{pie}\NormalTok{(ToPlot,}
+    \DataTypeTok{main=}\NormalTok{titleText2,}
+    \DataTypeTok{sub=}\NormalTok{sourceText)}
+\end{Highlighting}
+\end{Shaded}
+
+The title can also \emph{suggest} the decision:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# the pie plots the table:}
+\NormalTok{titleText3=}\StringTok{'WA needs to fully categorize school locations}\CharTok{\textbackslash{}n}\StringTok{(info from 2018)'}
+
+\KeywordTok{pie}\NormalTok{(ToPlot,}
+    \DataTypeTok{main=}\NormalTok{titleText3,}
+    \DataTypeTok{sub=}\NormalTok{sourceText)}
+\end{Highlighting}
+\end{Shaded}
+
+Titles are no that easy to produce. You need to rewrite them many times,
+until you find a good combination of words that can be read in less than
+ten seconds. Is also good to keep in mind that you must never give your
+audience a cacophonous version (a \emph{tongue twister}), and neither
+should you include adjectives.
+
+A general rule for any plot is to make it reachable for the audience you
+are writing to (read
+\href{https://www.red-gate.com/simple-talk/sysadmin/general/5-steps-to-making-your-boss-read-your-technical-reports/}{this}
+every day).
+
+Let's do more customization:
+
+\begin{itemize}
+\tightlist
+\item
+  You can use the values as labels. If values between {[}0,1{]}
+  represent shares, it is better to use a {[}0,100{]} scale (in \%).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ToPlot}\OperatorTok{*}\DecValTok{100}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  You can customize the colors:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# details:}
+\NormalTok{ToPlot=ToPlot}\OperatorTok{*}\DecValTok{100} \CommentTok{# preparing labels}
+\NormalTok{paletteHere=}\KeywordTok{rainbow}\NormalTok{(}\KeywordTok{length}\NormalTok{(ToPlot)) }\CommentTok{# customizing set of colors}
+
+\CommentTok{# plotting}
+\KeywordTok{pie}\NormalTok{(}\DataTypeTok{x=}\NormalTok{ToPlot,}\CommentTok{#table}
+    \DataTypeTok{col =}\NormalTok{ paletteHere, }
+    \DataTypeTok{labels =}\NormalTok{ ToPlot,}
+    \DataTypeTok{main=}\NormalTok{titleText,}
+    \DataTypeTok{sub=}\NormalTok{sourceText)}
+\end{Highlighting}
+\end{Shaded}
+
+The labels need better work:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{paste0}\NormalTok{(}\KeywordTok{round}\NormalTok{(ToPlot,}\DecValTok{2}\NormalTok{),}\StringTok{'%'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Then,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plotLabels=}\KeywordTok{paste0}\NormalTok{(}\KeywordTok{round}\NormalTok{(ToPlot,}\DecValTok{2}\NormalTok{),}\StringTok{'%'}\NormalTok{) }\CommentTok{# labels for the slices}
+\CommentTok{# plotting}
+\KeywordTok{pie}\NormalTok{(}\DataTypeTok{x=}\NormalTok{ToPlot,}\CommentTok{#table}
+    \DataTypeTok{col =}\NormalTok{ paletteHere, }
+    \DataTypeTok{labels =}\NormalTok{ plotLabels,}
+    \DataTypeTok{main=}\NormalTok{titleText,}
+    \DataTypeTok{sub=}\NormalTok{sourceText)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  You may need to use legends, but considering its cluttering effects:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plotting}
+\KeywordTok{pie}\NormalTok{(}\DataTypeTok{x=}\NormalTok{ToPlot,}\CommentTok{#table}
+    \DataTypeTok{col =}\NormalTok{ paletteHere, }
+    \DataTypeTok{labels =}\NormalTok{ plotLabels,}
+    \DataTypeTok{main=}\NormalTok{titleText,}
+    \DataTypeTok{sub=}\NormalTok{sourceText)}
+\CommentTok{#legend}
+\KeywordTok{legend}\NormalTok{(}\DataTypeTok{x=}\StringTok{"right"}\NormalTok{, }\CommentTok{#where}
+       \DataTypeTok{legend=}\KeywordTok{names}\NormalTok{(ToPlot), }\CommentTok{#text}
+       \DataTypeTok{fill =}\NormalTok{ paletteHere) }\CommentTok{#symbols' colors}
+\end{Highlighting}
+\end{Shaded}
+
+Most legends need customization:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# MANAGING THE LEGEND:}
+
+\KeywordTok{pie}\NormalTok{(}\DataTypeTok{x=}\NormalTok{ToPlot,}\CommentTok{#table}
+    \DataTypeTok{col =}\NormalTok{ paletteHere, }
+    \DataTypeTok{labels =}\NormalTok{ plotLabels,}
+    \DataTypeTok{main=}\NormalTok{titleText,}
+    \DataTypeTok{sub=}\NormalTok{sourceText)}
+\CommentTok{#legend}
+\KeywordTok{legend}\NormalTok{(}\DataTypeTok{x=}\StringTok{"right"}\NormalTok{, }\CommentTok{#where}
+       \DataTypeTok{legend=}\KeywordTok{names}\NormalTok{(ToPlot), }\CommentTok{#text}
+       \DataTypeTok{fill =}\NormalTok{ paletteHere,}
+       \DataTypeTok{bty =} \StringTok{'n'}\NormalTok{, }\CommentTok{# no box}
+       \DataTypeTok{cex =} \FloatTok{0.5}  \CommentTok{# shrink}
+\NormalTok{       ) }\CommentTok{#symbols' colors}
+\end{Highlighting}
+\end{Shaded}
+
+Most people tend to use pie charts with categorical data, but this
+\textbf{should not} be the default option to visualize classification
+(see this
+\href{https://medium.com/geckoboard-under-the-hood/think-before-you-pie-chart-and-more-effective-ways-to-visualize-your-data-862ea3456b26}{discussion}).
+Following the advice from the
+\href{https://www.youtube.com/watch?v=axx_MYb8-SI}{video} in that post,
+we should turn our pie into a \textbf{bar chart}. Let me do it with the
+same info I used to build the pie:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# barplot plots the table too}
+
+\KeywordTok{barplot}\NormalTok{(ToPlot,}
+         \DataTypeTok{col =}\NormalTok{ paletteHere,}
+         \DataTypeTok{main=}\NormalTok{titleText,}
+         \DataTypeTok{sub=}\NormalTok{sourceText)}
+\end{Highlighting}
+\end{Shaded}
+
+We saved some space as no legend was needed (the less \textbf{ink} the
+better visual). Speaking of saving, we can get rid of the colors (they
+were needed to differentiate the slices).
+
+A very important thing to consider is that axes represent some unit of
+measurement, so make sure that unit is shown:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{paletteHereNew=}\KeywordTok{c}\NormalTok{(}\StringTok{'gray'}\NormalTok{) }\CommentTok{# just one color}
+\CommentTok{# plotting}
+\KeywordTok{barplot}\NormalTok{(ToPlot,}
+     \DataTypeTok{col =}\NormalTok{ paletteHereNew,}
+     \DataTypeTok{border=}\OtherTok{NA}\NormalTok{, }\CommentTok{#no border}
+     \DataTypeTok{main=}\NormalTok{titleText,}
+     \DataTypeTok{sub=}\NormalTok{sourceText,}
+     \DataTypeTok{ylim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50}\NormalTok{),}
+     \DataTypeTok{ylab =} \StringTok{'(in %)'} \CommentTok{# show unit}
+\NormalTok{     )}
+\end{Highlighting}
+\end{Shaded}
+
+If you consider \textbf{annotating} the plot, you can use the labels we
+used before:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plotting}
+\NormalTok{location=}\KeywordTok{barplot}\NormalTok{(ToPlot,}
+     \DataTypeTok{col =}\NormalTok{ paletteHereNew,}
+     \DataTypeTok{border=}\OtherTok{NA}\NormalTok{,}
+     \DataTypeTok{main=}\NormalTok{titleText,}
+     \DataTypeTok{sub=}\NormalTok{sourceText,}
+     \DataTypeTok{ylim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50}\NormalTok{),}
+     \DataTypeTok{ylab =} \StringTok{'(in %)'}\NormalTok{)}
+
+\CommentTok{#annotating}
+\KeywordTok{text}\NormalTok{(}\DataTypeTok{x=}\NormalTok{location,}\DataTypeTok{y=}\NormalTok{ToPlot,}\DataTypeTok{labels=}\NormalTok{plotLabels,}
+     \DataTypeTok{pos =} \DecValTok{1}\NormalTok{,}\CommentTok{# if pos=3, text will be on top of bar}
+     \DataTypeTok{cex =} \FloatTok{0.8}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+You may decide to change the \textbf{orientation} of the plot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plotting}
+\NormalTok{location=}\KeywordTok{barplot}\NormalTok{(ToPlot,}
+     \DataTypeTok{col =}\NormalTok{ paletteHereNew,}
+     \DataTypeTok{border=}\OtherTok{NA}\NormalTok{,}
+     \DataTypeTok{main=}\NormalTok{titleText,}
+     \DataTypeTok{sub=}\NormalTok{sourceText,}
+     \DataTypeTok{ylim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50}\NormalTok{),}
+     \DataTypeTok{ylab =} \StringTok{'(in %)'}\NormalTok{,}
+     \DataTypeTok{horiz =}\NormalTok{ T) }\CommentTok{# ORIENTATION}
+
+\CommentTok{#annotating}
+\KeywordTok{text}\NormalTok{(}\DataTypeTok{x=}\NormalTok{location,}\DataTypeTok{y=}\NormalTok{ToPlot,}\DataTypeTok{labels=}\NormalTok{plotLabels,}
+     \DataTypeTok{pos =} \DecValTok{1}\NormalTok{) }\CommentTok{# this is the position of the label}
+\end{Highlighting}
+\end{Shaded}
+
+The problem above is that changing the orientation, changes the axes.
+Then, we need to do more work:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{location=}\KeywordTok{barplot}\NormalTok{(ToPlot,}
+         \DataTypeTok{col =}\NormalTok{ paletteHereNew,}
+         \DataTypeTok{border=}\OtherTok{NA}\NormalTok{,}
+         \DataTypeTok{main=}\NormalTok{titleText,}
+         \DataTypeTok{sub=}\NormalTok{sourceText,}
+         \DataTypeTok{xlim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50}\NormalTok{), }\CommentTok{#change to xlim}
+         \DataTypeTok{xlab =} \StringTok{'(in %)'}\NormalTok{, }\CommentTok{#change to xlab}
+         \DataTypeTok{horiz =}\NormalTok{ T)}
+
+\CommentTok{#annotating}
+\KeywordTok{text}\NormalTok{(}\DataTypeTok{x=}\NormalTok{ToPlot,}\DataTypeTok{y=}\NormalTok{location, }\CommentTok{#change of x and y}
+     \DataTypeTok{labels=}\NormalTok{plotLabels,}
+     \DataTypeTok{pos =} \DecValTok{4}\NormalTok{)  }\CommentTok{# change position of the label}
+\end{Highlighting}
+\end{Shaded}
+
+A little more work on the categories names:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{location=}\KeywordTok{barplot}\NormalTok{(ToPlot,}
+         \DataTypeTok{col =}\NormalTok{ paletteHereNew,}
+         \DataTypeTok{border=}\OtherTok{NA}\NormalTok{,}
+         \DataTypeTok{main=}\NormalTok{titleText,}
+         \DataTypeTok{sub=}\NormalTok{sourceText,}
+         \DataTypeTok{cex.names =} \FloatTok{0.7}\NormalTok{, }\CommentTok{#shrink category names}
+         \DataTypeTok{xlim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50}\NormalTok{), }
+         \DataTypeTok{xlab =} \StringTok{'(in %)'}\NormalTok{, }
+         \DataTypeTok{horiz =}\NormalTok{ T)}
+
+\CommentTok{#annotating}
+\KeywordTok{text}\NormalTok{(}\DataTypeTok{x=}\NormalTok{ToPlot,}\DataTypeTok{y=}\NormalTok{location,}\DataTypeTok{labels=}\NormalTok{plotLabels,}\DataTypeTok{pos =} \DecValTok{4}\NormalTok{)  }
+\end{Highlighting}
+\end{Shaded}
+
+We made the right changes, but some things do not look well. It would be
+better if:
+
+\begin{itemize}
+\tightlist
+\item
+  The subtitle (\emph{source}) and the label of the x-axis were not that
+  close. A good step will be to have the subtitle as an element of its
+  own, which allows, for instance, to decide its alignment and size:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{location=}\KeywordTok{barplot}\NormalTok{(ToPlot,}
+         \DataTypeTok{col =}\NormalTok{ paletteHereNew,}
+         \DataTypeTok{border=}\OtherTok{NA}\NormalTok{,}
+         \DataTypeTok{main=}\NormalTok{titleText, }\CommentTok{# no sub here!}
+         \DataTypeTok{xlim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50}\NormalTok{), }
+         \DataTypeTok{cex.names =} \FloatTok{0.5}\NormalTok{,}
+         \DataTypeTok{xlab =} \StringTok{'(in %)'}\NormalTok{, }
+         \DataTypeTok{horiz =}\NormalTok{ T)}
+
+\CommentTok{# annotating}
+\KeywordTok{text}\NormalTok{(}\DataTypeTok{x=}\NormalTok{ToPlot,}\DataTypeTok{y=}\NormalTok{location,}\DataTypeTok{labels=}\NormalTok{plotLabels,}\DataTypeTok{pos =} \DecValTok{4}\NormalTok{)  }
+
+\CommentTok{# subtitle}
+\KeywordTok{title}\NormalTok{(}\DataTypeTok{sub=}\NormalTok{sourceText, }
+      \DataTypeTok{adj=}\DecValTok{0}\NormalTok{,}\CommentTok{#adj=1 aligns to rigth.}
+      \DataTypeTok{cex.sub=}\FloatTok{0.7}\NormalTok{) }\CommentTok{#shrinking text}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  To have the label of the x-axis closer to the axis itself, we need to
+  alter the \emph{graphical parameters}:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# changing parameters}
+\CommentTok{# (distanceOfUnit To plot, }
+\CommentTok{# distanceOfAxislabels to plot,}
+\CommentTok{# distance ofTicks to plot)}
+\CommentTok{# default is: mgp=c(3, 1, 0)}
+
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mgp=}\KeywordTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\DecValTok{0}\NormalTok{)) }
+\NormalTok{#####}
+
+\NormalTok{location=}\KeywordTok{barplot}\NormalTok{(ToPlot,}
+         \DataTypeTok{col =}\NormalTok{ paletteHereNew,}
+         \DataTypeTok{border=}\OtherTok{NA}\NormalTok{,}
+         \DataTypeTok{main=}\NormalTok{titleText,}
+         \DataTypeTok{xlim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50}\NormalTok{), }
+         \DataTypeTok{xlab =} \StringTok{'(in %)'}\NormalTok{,}
+         \DataTypeTok{cex.names =} \FloatTok{0.6}\NormalTok{,}
+         \DataTypeTok{cex.lab=}\FloatTok{0.6}\NormalTok{, }\CommentTok{# shrinking label text}
+         \DataTypeTok{horiz =}\NormalTok{ T) }
+
+\KeywordTok{text}\NormalTok{(}\DataTypeTok{x=}\NormalTok{ToPlot,}\DataTypeTok{y=}\NormalTok{location,}\DataTypeTok{labels=}\NormalTok{plotLabels,}\DataTypeTok{pos =} \DecValTok{4}\NormalTok{) }
+
+\KeywordTok{title}\NormalTok{(}\DataTypeTok{sub=}\NormalTok{sourceText, }\DataTypeTok{adj=}\DecValTok{0}\NormalTok{,}\DataTypeTok{cex.sub=}\FloatTok{0.7}\NormalTok{,}
+      \DataTypeTok{line =} \DecValTok{3}\NormalTok{) }\CommentTok{#push the text down}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  It is generally a good idea to add a \textbf{reference line}, which
+  can represent an expected value or another relevant value. Since I
+  have four different locations (not considering the missing ones), let
+  me put a line to signal the 25\% (uniform share among four locations):
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titleText2=}\StringTok{'Are all locations getting a fair share of public schools in WA?'}
+
+
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mgp=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\DecValTok{0}\NormalTok{)) }
+\NormalTok{location=}\KeywordTok{barplot}\NormalTok{(ToPlot,}
+         \DataTypeTok{col =}\NormalTok{ paletteHereNew,}
+         \DataTypeTok{border=}\OtherTok{NA}\NormalTok{,}
+         \DataTypeTok{main=}\NormalTok{titleText2,}
+         \DataTypeTok{xlim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50}\NormalTok{), }
+         \DataTypeTok{cex.names =} \FloatTok{0.6}\NormalTok{,}
+         \DataTypeTok{cex.lab=}\FloatTok{0.6}\NormalTok{,}
+         \DataTypeTok{xlab =} \StringTok{'(in %)'}\NormalTok{,}
+         \DataTypeTok{horiz =}\NormalTok{ T}
+\NormalTok{         ) }
+
+\KeywordTok{text}\NormalTok{(}\DataTypeTok{x=}\NormalTok{ToPlot,}\DataTypeTok{y=}\NormalTok{location,}\DataTypeTok{labels=}\NormalTok{plotLabels,}\DataTypeTok{pos =} \DecValTok{4}\NormalTok{) }
+\KeywordTok{title}\NormalTok{(}\DataTypeTok{sub=}\NormalTok{sourceText, }\DataTypeTok{adj=}\DecValTok{0}\NormalTok{,}\DataTypeTok{cex.sub=}\FloatTok{0.7}\NormalTok{,}
+      \DataTypeTok{line =} \DecValTok{3}\NormalTok{) }
+
+\CommentTok{# reference line}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{v=}\DecValTok{25}\NormalTok{,}\CommentTok{#position vertical}
+       \DataTypeTok{lty=}\DecValTok{3}\NormalTok{,}\CommentTok{#type}
+       \DataTypeTok{lwd=}\DecValTok{3}\NormalTok{)}\CommentTok{#width}
+\end{Highlighting}
+\end{Shaded}
+
+Again, adding another element requires adjusting what we had. What about
+writing your own axis-values and reducing the bar annotations:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mgp=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\DecValTok{0}\NormalTok{)) }
+\NormalTok{location=}\KeywordTok{barplot}\NormalTok{(ToPlot,}
+         \DataTypeTok{col =}\NormalTok{ paletteHereNew,}
+         \DataTypeTok{border=}\OtherTok{NA}\NormalTok{,}
+         \DataTypeTok{main=}\NormalTok{titleText2,}
+         \DataTypeTok{xlim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50}\NormalTok{), }
+         \DataTypeTok{xlab =} \StringTok{'(in %)'}\NormalTok{,}
+         \DataTypeTok{cex.names=}\FloatTok{0.6}\NormalTok{,}
+         \DataTypeTok{cex.lab=}\FloatTok{0.6}\NormalTok{,}
+         \DataTypeTok{las=}\DecValTok{2}\NormalTok{,}
+         \DataTypeTok{horiz =}\NormalTok{ T,}
+         \DataTypeTok{xaxt=}\StringTok{"n"}\NormalTok{) }\CommentTok{# no x-axis, so I customize it below...}
+
+\KeywordTok{text}\NormalTok{(}\DataTypeTok{x=}\NormalTok{ToPlot,}\DataTypeTok{y=}\NormalTok{location,}\DataTypeTok{labels=}\NormalTok{plotLabels,}\DataTypeTok{pos =} \DecValTok{4}\NormalTok{,}\DataTypeTok{cex =} \FloatTok{0.7}\NormalTok{) }
+\KeywordTok{title}\NormalTok{(}\DataTypeTok{sub=}\NormalTok{sourceText, }\DataTypeTok{adj=}\DecValTok{0}\NormalTok{,}\DataTypeTok{cex.sub=}\FloatTok{0.7}\NormalTok{,}\DataTypeTok{line =} \DecValTok{3}\NormalTok{) }
+
+\CommentTok{#reference line}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{v=}\DecValTok{25}\NormalTok{,}\DataTypeTok{lty=}\DecValTok{3}\NormalTok{,}\DataTypeTok{lwd=}\DecValTok{3}\NormalTok{)}
+
+
+\CommentTok{# customizing tick values}
+\NormalTok{newXvalues<-}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{25}\NormalTok{,}\DecValTok{40}\NormalTok{,}\DecValTok{50}\NormalTok{) }\CommentTok{# you just want to show this on the axis}
+\KeywordTok{axis}\NormalTok{(}\DataTypeTok{side=}\DecValTok{1}\NormalTok{, }
+     \DataTypeTok{at=}\NormalTok{newXvalues, }
+     \DataTypeTok{labels =}\NormalTok{ newXvalues,}
+     \DataTypeTok{cex.axis=}\FloatTok{0.8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+So far, we have used the \emph{basic} R capabilities for plotting.
+
+There are alternative libraries, like \textbf{ggplot2}, that are also
+frequently used. However, it has a different approach, which allows to
+add layers that let you customize your plot. The classic approach for
+ggplot is:
+
+\begin{itemize}
+\tightlist
+\item
+  Avoid missing values and prepare frequency table. We replaced the
+  missing values (now they are `Unknown'). Here, you need to transform
+  the \emph{table} into a \textbf{data frame}:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tableFreq=}\KeywordTok{as.data.frame}\NormalTok{(ToPlot)}
+\KeywordTok{names}\NormalTok{(tableFreq)=}\KeywordTok{c}\NormalTok{(}\StringTok{"locale"}\NormalTok{,}\StringTok{"pct"}\NormalTok{)}
+\CommentTok{#you have:}
+\NormalTok{tableFreq}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Call the library:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Create the base \emph{object}, which is not a plot, just informing the
+  main variables:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#base GGPLOT2 starts with a "base", telling WHAT VARIABLES TO PLOT}
+\NormalTok{base=}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ tableFreq, }
+             \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ locale,}
+                 \DataTypeTok{y =}\NormalTok{ pct)) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  On top of the previous object, add the layer that produces the main
+  plots (the next layers will add or customize elements in the plot):
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot1 =}\StringTok{ }\NormalTok{base }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{fill =}\StringTok{"gray"}\NormalTok{,}
+                        \DataTypeTok{stat =} \StringTok{'identity'}\NormalTok{) }\CommentTok{# y is just what it is!}
+\NormalTok{plot1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  We can now pay attention to the titles:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot2 =}\StringTok{ }\NormalTok{plot1 }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\NormalTok{titleText2,}
+                     \DataTypeTok{x =}\OtherTok{NULL}\NormalTok{, }
+                     \DataTypeTok{y =} \OtherTok{NULL}\NormalTok{,}
+                     \DataTypeTok{caption =}\NormalTok{ sourceText)}
+\NormalTok{plot2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Add the reference lines:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot3 =}\StringTok{ }\NormalTok{plot2 }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_hline}\NormalTok{(}\DataTypeTok{yintercept =} \DecValTok{25}\NormalTok{, }\CommentTok{#where}
+                           \DataTypeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }
+                           \DataTypeTok{size=}\FloatTok{1.5}\NormalTok{, }\CommentTok{#thickness}
+                           \DataTypeTok{alpha=}\FloatTok{0.5}\NormalTok{) }\CommentTok{#transparency}
+\NormalTok{plot3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Customize the axes:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(scales)}
+
+\CommentTok{# customize Y axis}
+\NormalTok{plot4 =}\StringTok{ }\NormalTok{plot3 }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{breaks=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{, }\DecValTok{25}\NormalTok{,}\DecValTok{40}\NormalTok{,}\DecValTok{50}\NormalTok{),}
+                                 \DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{50}\NormalTok{), }\CommentTok{# expand = c(0, 0),}
+                                 \DataTypeTok{labels=}\NormalTok{scales}\OperatorTok{::}\KeywordTok{unit_format}\NormalTok{(}\DataTypeTok{suffix =} \StringTok{'%'}\NormalTok{)) }
+\NormalTok{plot4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Less ink and title/subtitle positions:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot5 =}\StringTok{ }\NormalTok{plot4 }\OperatorTok{+}\StringTok{ }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{panel.background =} \KeywordTok{element_rect}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"white"}\NormalTok{,}
+                                                    \DataTypeTok{colour =} \StringTok{"grey50"}\NormalTok{),}
+                    \DataTypeTok{plot.caption =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{hjust =} \DecValTok{0}\NormalTok{), }\CommentTok{# default was 1}
+                    \DataTypeTok{plot.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{hjust =} \FloatTok{0.5}\NormalTok{))}
+\NormalTok{plot5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  annotating the bars:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot6 =}\StringTok{ }\NormalTok{plot5 }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ pct ,}
+                            \DataTypeTok{label =} \KeywordTok{paste0}\NormalTok{(}\KeywordTok{round}\NormalTok{(pct,}\DecValTok{2}\NormalTok{), }\StringTok{'%'}\NormalTok{)),}
+                        \DataTypeTok{vjust=}\DecValTok{1}\NormalTok{, }\CommentTok{# if flipping 'hjust'}
+                        \DataTypeTok{size =} \DecValTok{3}\NormalTok{)}
+\CommentTok{# wanna flip the plot?}
+\NormalTok{plot6 }\CommentTok{#+ coord_flip()}
+\end{Highlighting}
+\end{Shaded}
+
+Bar plots are the default option for categorical variables. In general,
+you see the distribution of the classification, which allows you to
+identify \textbf{concentration}. For that reason, ordering the bars by
+height can be helpful:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{###}
+\NormalTok{ToPlotOrd=}\KeywordTok{sort}\NormalTok{(ToPlot)}
+\NormalTok{###}
+
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mgp=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\DecValTok{0}\NormalTok{)) }\CommentTok{# distance label, tickText,tick}
+\NormalTok{location=}\KeywordTok{barplot}\NormalTok{(ToPlotOrd,}
+         \DataTypeTok{col =}\NormalTok{ paletteHereNew,}
+         \DataTypeTok{border=}\OtherTok{NA}\NormalTok{,}
+         \DataTypeTok{main=}\NormalTok{titleText2,}
+         \DataTypeTok{xlim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50}\NormalTok{), }
+         \DataTypeTok{xlab =} \StringTok{'(in %)'}\NormalTok{,}
+         \DataTypeTok{horiz =}\NormalTok{ T,}
+         \DataTypeTok{cex.names =} \FloatTok{0.7}\NormalTok{,}
+         \DataTypeTok{cex.lab=}\FloatTok{0.6}\NormalTok{,}
+         \DataTypeTok{xaxt=}\StringTok{"n"}\NormalTok{) }\CommentTok{# no x-axis, so I customize it below...}
+
+\KeywordTok{text}\NormalTok{(}\DataTypeTok{x=}\NormalTok{ToPlotOrd,}\DataTypeTok{y=}\NormalTok{location,}\DataTypeTok{labels=}\NormalTok{plotLabels,}\DataTypeTok{pos =} \DecValTok{2}\NormalTok{,}\DataTypeTok{cex =} \FloatTok{0.7}\NormalTok{) }
+\KeywordTok{title}\NormalTok{(}\DataTypeTok{sub=}\NormalTok{sourceText, }\DataTypeTok{adj=}\DecValTok{0}\NormalTok{,}\DataTypeTok{cex.sub=}\FloatTok{0.7}\NormalTok{,}\DataTypeTok{line =} \DecValTok{3}\NormalTok{) }
+
+\CommentTok{# reference line}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{v=}\DecValTok{25}\NormalTok{,}\DataTypeTok{lty=}\DecValTok{3}\NormalTok{,}\DataTypeTok{lwd=}\DecValTok{3}\NormalTok{)}
+
+\CommentTok{# customizong tick values}
+\NormalTok{xtick<-}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{25}\NormalTok{,}\DecValTok{40}\NormalTok{,}\DecValTok{50}\NormalTok{)}
+\KeywordTok{axis}\NormalTok{(}\DataTypeTok{side=}\DecValTok{1}\NormalTok{, }\DataTypeTok{at=}\NormalTok{xtick, }\DataTypeTok{labels =}\NormalTok{ xtick,}\DataTypeTok{cex.axis=}\FloatTok{0.8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The plot above simply change the order of the \emph{table}. If you want
+to do the same with \emph{ggplot} you should try the command:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tableFreq[}\KeywordTok{order}\NormalTok{(}\OperatorTok{-}\NormalTok{tableFreq}\OperatorTok{$}\NormalTok{pct),]}
+\end{Highlighting}
+\end{Shaded}
+
+{ Exercise:Use ggplot to show a bar plot ordered by share size.}
+
+We could use our reference line to show gaps or differences. In this
+case, the \textbf{Lollipop} plot may be useful. This one is just a
+replacement for a bar plot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{base =}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(tableFreq, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{locale,pct)) }
+\NormalTok{lolliplot1=base }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_segment}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \DecValTok{0}\NormalTok{, }
+                                   \DataTypeTok{x =}\NormalTok{ locale, }
+                                   \DataTypeTok{yend =}\NormalTok{ pct, }
+                                   \DataTypeTok{xend =}\NormalTok{ locale), }\DataTypeTok{color =} \StringTok{"grey50"}\NormalTok{) }
+\NormalTok{lolliplot1 }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+And, if you order the data frame:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tableFreq[}\KeywordTok{order}\NormalTok{(tableFreq}\OperatorTok{$}\NormalTok{pct),]}
+\end{Highlighting}
+\end{Shaded}
+
+You can get:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# reordering DF steps:}
+\NormalTok{tableFreqO=tableFreq[}\KeywordTok{order}\NormalTok{(tableFreq}\OperatorTok{$}\NormalTok{pct),]}
+
+
+\NormalTok{base =}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(tableFreqO, }\KeywordTok{aes}\NormalTok{(locale,pct)) }
+\NormalTok{lolliplot1=base }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_segment}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \DecValTok{0}\NormalTok{, }
+                                   \DataTypeTok{x =}\NormalTok{ locale, }
+                                   \DataTypeTok{yend =}\NormalTok{ pct, }
+                                   \DataTypeTok{xend =}\NormalTok{ locale), }\DataTypeTok{color =} \StringTok{"gray"}\NormalTok{) }
+\NormalTok{lolliplot2 =}\StringTok{ }\NormalTok{lolliplot1 }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{()}
+\NormalTok{lolliplot2 }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_x_discrete}\NormalTok{(}\DataTypeTok{limits=}\NormalTok{tableFreqO}\OperatorTok{$}\NormalTok{locale) }\CommentTok{# key element}
+\end{Highlighting}
+\end{Shaded}
+
+And, what about changing the axis values so that we can identify the
+gaps:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# new variable}
+\NormalTok{tableFreqO}\OperatorTok{$}\NormalTok{gap=tableFreqO}\OperatorTok{$}\NormalTok{pct}\OperatorTok{-}\DecValTok{25}
+
+\CommentTok{# plot the new variable}
+\NormalTok{base =}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(tableFreqO, }\KeywordTok{aes}\NormalTok{(locale,gap)) }
+
+\NormalTok{lolliplot1=base }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_segment}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \DecValTok{0}\NormalTok{, }
+                                   \DataTypeTok{x =}\NormalTok{ locale, }
+                                   \DataTypeTok{yend =}\NormalTok{ gap, }
+                                   \DataTypeTok{xend =}\NormalTok{ locale), }\DataTypeTok{color =} \StringTok{"gray"}\NormalTok{) }
+\NormalTok{lolliplot2 =}\StringTok{ }\NormalTok{lolliplot1 }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{()}
+\NormalTok{lolliplot2 }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_x_discrete}\NormalTok{(}\DataTypeTok{limits=}\NormalTok{tableFreqO}\OperatorTok{$}\NormalTok{locale) }\CommentTok{# key element}
+\end{Highlighting}
+\end{Shaded}
+
+Maybe add some color:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# a new column for color}
+\NormalTok{tableFreqO}\OperatorTok{$}\NormalTok{PositiveGap=}\KeywordTok{ifelse}\NormalTok{(tableFreqO}\OperatorTok{$}\NormalTok{gap}\OperatorTok{>}\DecValTok{0}\NormalTok{,T,F)}
+
+\CommentTok{# add new aesthetics 'color'}
+\NormalTok{base =}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(tableFreqO, }\KeywordTok{aes}\NormalTok{(locale,gap,}
+                              \DataTypeTok{color=}\NormalTok{PositiveGap)) }\CommentTok{#change}
+\NormalTok{lolliplot1=base }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_segment}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \DecValTok{0}\NormalTok{, }
+                                   \DataTypeTok{x =}\NormalTok{ locale, }
+                                   \DataTypeTok{yend =}\NormalTok{ gap, }
+                                   \DataTypeTok{xend =}\NormalTok{ locale), }\DataTypeTok{color =} \StringTok{"gray"}\NormalTok{) }
+\NormalTok{lolliplot2 =}\StringTok{ }\NormalTok{lolliplot1 }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{()}
+\NormalTok{lolliplot2 }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_x_discrete}\NormalTok{(}\DataTypeTok{limits=}\NormalTok{tableFreqO}\OperatorTok{$}\NormalTok{locale) }\CommentTok{# key element}
+\end{Highlighting}
+\end{Shaded}
+
+Maybe add some extra info:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# a new column for color}
+\NormalTok{tableFreqO}\OperatorTok{$}\NormalTok{PositiveGap=}\KeywordTok{ifelse}\NormalTok{(tableFreqO}\OperatorTok{$}\NormalTok{gap}\OperatorTok{>}\DecValTok{0}\NormalTok{,T,F)}
+
+\NormalTok{base =}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(tableFreqO, }\KeywordTok{aes}\NormalTok{(locale,gap,}\DataTypeTok{color=}\NormalTok{PositiveGap,}
+                              \DataTypeTok{label =} \KeywordTok{round}\NormalTok{(gap,}\DecValTok{3}\NormalTok{))) }\CommentTok{#  change}
+\NormalTok{lolliplot1=base }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_segment}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \DecValTok{0}\NormalTok{, }
+                                   \DataTypeTok{x =}\NormalTok{ locale, }
+                                   \DataTypeTok{yend =}\NormalTok{ gap, }
+                                   \DataTypeTok{xend =}\NormalTok{ locale), }\DataTypeTok{color =} \StringTok{"gray"}\NormalTok{) }
+\NormalTok{lolliplot2=lolliplot1 }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }
+\NormalTok{lolliplot3=}\StringTok{ }\NormalTok{lolliplot2 }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_x_discrete}\NormalTok{(}\DataTypeTok{limits=}\NormalTok{tableFreqO}\OperatorTok{$}\NormalTok{locale) }
+\CommentTok{# annotating and moving the text on the horizontal}
+\NormalTok{lolliplot3 }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_text}\NormalTok{(}\DataTypeTok{nudge_x=}\FloatTok{0.3}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+You can avoid the overlaping symbols in the legend by using:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lolliplot3 }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_text}\NormalTok{(}\DataTypeTok{nudge_x=}\FloatTok{0.3}\NormalTok{,}\DataTypeTok{show.legend =} \OtherTok{FALSE}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+{ Exercise:Complete adding the elements missing in the last plot. }
+
+\protect\hyperlink{part1}{Go to table of contents.}
+
+\paragraph{\texorpdfstring{{ 2. Visualization for ordinal
+scales}}{ 2. Visualization for ordinal scales}}\label{visualization-for-ordinal-scales}
+
+For this section, we will use the variable that tells us the highest
+grade offered in a school. A simple exploration gives:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table}\NormalTok{(eduwa}\OperatorTok{$}\NormalTok{High.Grade,}\DataTypeTok{exclude =} \StringTok{'nothing'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Being a categorical variable, the default option is again the bar plot.
+So let's prepare the frequency table as a data frame:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{frqTabO=}\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(eduwa}\OperatorTok{$}\NormalTok{High.Grade)))}
+\KeywordTok{names}\NormalTok{(frqTabO)=}\KeywordTok{c}\NormalTok{(}\StringTok{'grade'}\NormalTok{,}\StringTok{'pct'}\NormalTok{)}
+\NormalTok{frqTabO}
+\end{Highlighting}
+\end{Shaded}
+
+Now, we can use ggplot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{base =}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(frqTabO,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{grade,}\DataTypeTok{y=}\NormalTok{pct))}
+\NormalTok{base }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{'identity'}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+The x-values in this variable have \textbf{order}. That is, there is an
+increasing level in the values. Whenever we have an ordering, besides
+\emph{concentration} we can visualize \textbf{symmetry}: if there is
+bias towards lower or higher values.
+
+Bar plots help you see concentration and symmetry, but we have an
+alternative way to clearly detect symmetry, via \textbf{boxplots}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# boxplots do not use frequency tables}
+
+\CommentTok{# as.numeric produces turns levels of the factor into numbers}
+\NormalTok{box1 =}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(eduwa, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y=}\KeywordTok{as.numeric}\NormalTok{(High.Grade))) }
+\NormalTok{box1 =}\StringTok{ }\NormalTok{box1 }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_boxplot}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{coord_flip}\NormalTok{() }\CommentTok{# to show it horizontally}
+
+\NormalTok{box1}
+\end{Highlighting}
+\end{Shaded}
+
+You have symmetry when the distance of those whiskers to the box is the
+same, and when the thick line is in the middle of the box. You can see
+that the values show a negative asymmetry (tail to the left).
+
+Box plots expect a numeric value as an input, but we have an ordered
+categorical, so we used the \emph{as.numeric()} function. However, that
+eliminated the levels we saw in the previous bar plot; we can put the
+levels back in our plot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# the labels use the original ordinal levels}
+\NormalTok{ordLabels=}\StringTok{ }\KeywordTok{levels}\NormalTok{(eduwa}\OperatorTok{$}\NormalTok{High.Grade)}
+
+\NormalTok{box2 =}\StringTok{ }\NormalTok{box1 }\OperatorTok{+}\StringTok{ }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{labels=}\NormalTok{ordLabels,}\DataTypeTok{breaks=}\DecValTok{1}\OperatorTok{:}\DecValTok{15}\NormalTok{)}
+\NormalTok{box2}
+\end{Highlighting}
+\end{Shaded}
+
+Box plots have important statistical information. The beginning and the
+ending of the box indicates the first (q1) and the third quantile (q75);
+and the thicker line in the middle represents the median. All those
+values are clearly visible, but we can retrieve the values like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#get positions}
+\CommentTok{# using 'ggplot_build'}
+\NormalTok{pos_q1=}\StringTok{     }\KeywordTok{ggplot_build}\NormalTok{(box2)}\OperatorTok{$}\NormalTok{data[[}\DecValTok{1}\NormalTok{]]}\OperatorTok{$}\NormalTok{lower}
+\NormalTok{pos_median=}\StringTok{ }\KeywordTok{ggplot_build}\NormalTok{(box2)}\OperatorTok{$}\NormalTok{data[[}\DecValTok{1}\NormalTok{]]}\OperatorTok{$}\NormalTok{middle}
+\NormalTok{pos_q3=}\StringTok{     }\KeywordTok{ggplot_build}\NormalTok{(box2)}\OperatorTok{$}\NormalTok{data[[}\DecValTok{1}\NormalTok{]]}\OperatorTok{$}\NormalTok{upper}
+
+\CommentTok{# using}
+\KeywordTok{levels}\NormalTok{(eduwa}\OperatorTok{$}\NormalTok{High.Grade)[}\KeywordTok{c}\NormalTok{(pos_q1,pos_median,pos_q3)]}
+\end{Highlighting}
+\end{Shaded}
+
+From the information retrieved, we know:
+
+\begin{itemize}
+\tightlist
+\item
+  25\% of the public Schools offer at most 5th GRADE.
+\item
+  50\% of the public Schools offer at most 8th GRADE.
+\item
+  75\% of the public Schools offer at most 12th GRADE. Also, 25\% of the
+  schools offer at least 12th grade.
+\end{itemize}
+
+We can find these results with a \emph{detailed} frequency table; that
+is, instead of using the command \emph{table} as we did before, we could
+try a more advanced function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(summarytools)}
+\KeywordTok{freq}\NormalTok{(eduwa}\OperatorTok{$}\NormalTok{High.Grade,}\DataTypeTok{style =} \StringTok{'rmarkdown'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+{ Exercise: Make sure our box plot follows the same design approach and
+include all the elements as in the bar plot for nominal data. }
+
+\protect\hyperlink{part1}{Go to table of contents.}
+
+\subsubsection{Counting}\label{counting}
+
+Counting expresses numerical values. They could be represented with bar
+plots if their frequency table had few different values. For example,
+the variable \emph{Reduced.Lunch} informs how many kids there are in
+each school that have that lunch for a reduced price.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# how many unique values}
+\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(eduwa}\OperatorTok{$}\NormalTok{Reduced.Lunch))}
+\end{Highlighting}
+\end{Shaded}
+
+There are too many different values. Then, the bar plot is not a good
+idea (and neither a frequency table):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{barplot}\NormalTok{(}\KeywordTok{table}\NormalTok{(eduwa}\OperatorTok{$}\NormalTok{Reduced.Lunch),}\DataTypeTok{las=}\DecValTok{2}\NormalTok{,}\DataTypeTok{cex.names =} \FloatTok{0.3}\NormalTok{,}
+        \DataTypeTok{main=}\StringTok{'bad idea'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+On the other hand, when we have a numerical variable, there are more
+statistical values that help understand its behavior:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# median close to mean?}
+\CommentTok{# median and mean far from max or min?}
+\CommentTok{# q1 distance to min is similar ti q3 distance to max?}
+\CommentTok{# how many missing?}
+
+\KeywordTok{summary}\NormalTok{(eduwa}\OperatorTok{$}\NormalTok{Reduced.Lunch)}
+\end{Highlighting}
+\end{Shaded}
+
+The bar plot produces a bar for each unique value in the data, counting
+how many times this value appeared. Now, we have many values, so we need
+to organize the data into \emph{intervals}. The \textbf{histogram} is
+the basic plot when intervals are needed, you can use the basic
+function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eduwa3=eduwa[}\KeywordTok{complete.cases}\NormalTok{(eduwa}\OperatorTok{$}\NormalTok{Reduced.Lunch),]}
+\NormalTok{dataHist=}\KeywordTok{hist}\NormalTok{(eduwa3}\OperatorTok{$}\NormalTok{Reduced.Lunch) }\CommentTok{#saving info in dataHist}
+\end{Highlighting}
+\end{Shaded}
+
+The width of each \textbf{bin} (bar) represents an interval of values,
+while its height the frequency. The histogram shows an asymmetric shape,
+where the bin with lowest values of the variable (between 0 and 20) are
+the most common (above 1000).
+
+Of course, ggplot has a version of histograms:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{base=}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(eduwa3,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Reduced.Lunch))  }
+\NormalTok{h1=}\StringTok{ }\NormalTok{base }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{()}
+\NormalTok{h1 }
+\end{Highlighting}
+\end{Shaded}
+
+Notice that you do not get the same plot. Let's see the info from the
+basic function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dataHist}
+\end{Highlighting}
+\end{Shaded}
+
+And now see the info that was used in ggplot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot_build}\NormalTok{(h1)}\OperatorTok{$}\NormalTok{data[[}\DecValTok{1}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+The first `x' was 0 in ggplot, while it was 10 (in \emph{\$mids}) in the
+base graphic; from there on everything changed. And not only that, you
+have 16 bins in the base graphic, while you got 30 in ggplot.
+
+Of course, you can alter that in both alternatives.
+
+Below, you can see a version where both plots are the same:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#ggplot}
+\NormalTok{base=}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(eduwa3,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Reduced.Lunch))  }
+\NormalTok{h1=}\StringTok{ }\NormalTok{base }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{20}\NormalTok{,}\DataTypeTok{boundary=}\DecValTok{0}\NormalTok{) }\CommentTok{#changing width}
+\NormalTok{h1=}\StringTok{ }\NormalTok{h1 }\OperatorTok{+}\StringTok{ }\KeywordTok{stat_bin}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{20}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label=}\NormalTok{..count..), }
+                  \DataTypeTok{geom =} \StringTok{"text"}\NormalTok{,}\DataTypeTok{boundary =} \DecValTok{0}\NormalTok{,}\DataTypeTok{vjust=}\OperatorTok{-}\FloatTok{0.5}\NormalTok{)}
+\NormalTok{h1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# base}
+\KeywordTok{hist}\NormalTok{(eduwa3}\OperatorTok{$}\NormalTok{Reduced.Lunch,}\DataTypeTok{labels =}\NormalTok{ T,}\DataTypeTok{xlab=}\StringTok{"Reduced Lunch"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Of course, you can make it a litle better:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{hist}\NormalTok{(eduwa3}\OperatorTok{$}\NormalTok{Reduced.Lunch,}\DataTypeTok{labels =}\NormalTok{ T,}\DataTypeTok{xlab=}\StringTok{"Reduced Lunch"}\NormalTok{, }\DataTypeTok{xaxt=}\StringTok{"n"}\NormalTok{) }
+\KeywordTok{axis}\NormalTok{(}\DataTypeTok{side=}\DecValTok{1}\NormalTok{, }\DataTypeTok{at=}\NormalTok{dataHist}\OperatorTok{$}\NormalTok{breaks) }\CommentTok{# showing axis labels better}
+\end{Highlighting}
+\end{Shaded}
+
+As mentioned before, we are plotting intervals, so the accompanying
+table can be built. For that, we first create the intervals into another
+variable:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eduwa3}\OperatorTok{$}\NormalTok{redLunchOrd=}\KeywordTok{cut}\NormalTok{(eduwa3}\OperatorTok{$}\NormalTok{Reduced.Lunch,}
+                       \DataTypeTok{breaks =}\NormalTok{ dataHist}\OperatorTok{$}\NormalTok{breaks,}
+                       \DataTypeTok{include.lowest =}\NormalTok{ T,}
+                       \DataTypeTok{ordered_result =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+And, as before, we use the \emph{freq} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# no need to show count of NAs:}
+\KeywordTok{freq}\NormalTok{(eduwa3}\OperatorTok{$}\NormalTok{redLunchOrd,}\DataTypeTok{style =} \StringTok{'rmarkdown'}\NormalTok{,}\DataTypeTok{report.nas =}\NormalTok{ F)}
+\end{Highlighting}
+\end{Shaded}
+
+{ Exercise: Make a histogram for the variable FREE LUNCH, and make sure
+it has all the right elements, and get rid of unnecessary elements. }
+
+\protect\hyperlink{part1}{Go to table of contents.}
+
+\subsubsection{Measurement}\label{measurement}
+
+A simplistic idea of measurement tells you the times a particular unit
+is present in the unit of analysis; which allows for the presence of
+decimal places. There are variables that can have negative values.
+
+Let's analyze the variable \emph{Student.Teacher.Ratio}, but organized
+by county:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# tapply(variable,group,functionToApply)}
+\KeywordTok{tapply}\NormalTok{(eduwa}\OperatorTok{$}\NormalTok{Student.Teacher.Ratio, eduwa}\OperatorTok{$}\NormalTok{County, mean)}
+\end{Highlighting}
+\end{Shaded}
+
+Above, I tried to compute the mean for each county, but the function
+\emph{mean()} outputs a missing value (\emph{NA}) as the result when
+there is one \emph{NA} in the column:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# strategy 1: remove missing before computing function: na.rm=T}
+\KeywordTok{tapply}\NormalTok{(eduwa}\OperatorTok{$}\NormalTok{Student.Teacher.Ratio, eduwa}\OperatorTok{$}\NormalTok{County, mean,}\DataTypeTok{na.rm=}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
+
+Of course, you can clean first:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# strategy 2: }
+\NormalTok{eduwa4=eduwa[}\KeywordTok{complete.cases}\NormalTok{(eduwa}\OperatorTok{$}\NormalTok{Student.Teacher.Ratio),]}
+
+\KeywordTok{tapply}\NormalTok{(eduwa4}\OperatorTok{$}\NormalTok{Student.Teacher.Ratio, }
+\NormalTok{       eduwa4}\OperatorTok{$}\NormalTok{County, }
+\NormalTok{       mean)}
+\end{Highlighting}
+\end{Shaded}
+
+Great!
+
+Now let me plot a histogram of those means:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# keeping strategy 2: }
+\NormalTok{meanValues=}\KeywordTok{tapply}\NormalTok{(eduwa4}\OperatorTok{$}\NormalTok{Student.Teacher.Ratio, }
+\NormalTok{                  eduwa4}\OperatorTok{$}\NormalTok{County, }
+\NormalTok{                  mean)}
+\KeywordTok{hist}\NormalTok{(meanValues)}
+\end{Highlighting}
+\end{Shaded}
+
+Let's compute some statistics:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(meanValues)}
+\end{Highlighting}
+\end{Shaded}
+
+You can use that info, for example, to plot the mean as a reference
+line:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#reference line}
+\KeywordTok{hist}\NormalTok{(meanValues)}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{v=}\KeywordTok{mean}\NormalTok{(meanValues),}\DataTypeTok{lty=}\DecValTok{3}\NormalTok{,}\DataTypeTok{lwd=}\DecValTok{3}\NormalTok{,}\DataTypeTok{col=}\StringTok{'blue'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Measurements are continuous values, then a \textbf{density} plot is more
+appealing to its nature:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mvDense=}\KeywordTok{density}\NormalTok{(meanValues)}
+
+\KeywordTok{plot}\NormalTok{(mvDense,}\DataTypeTok{main=}\StringTok{"Title"}\NormalTok{,}\DataTypeTok{col=}\StringTok{'black'}\NormalTok{,}\DataTypeTok{xlab=}\OtherTok{NA}\NormalTok{)}
+
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{v=}\KeywordTok{mean}\NormalTok{(meanValues),}\DataTypeTok{lty=}\DecValTok{3}\NormalTok{,}\DataTypeTok{lwd=}\DecValTok{3}\NormalTok{,}\DataTypeTok{col=}\StringTok{'blue'}\NormalTok{) }\CommentTok{#mean}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{v=}\KeywordTok{median}\NormalTok{(meanValues),}\DataTypeTok{lty=}\DecValTok{3}\NormalTok{,}\DataTypeTok{lwd=}\DecValTok{3}\NormalTok{,}\DataTypeTok{col=}\StringTok{'red'}\NormalTok{)}\CommentTok{#median}
+\KeywordTok{legend}\NormalTok{(}\DataTypeTok{x=}\StringTok{"right"}\NormalTok{,}
+       \DataTypeTok{legend=}\KeywordTok{c}\NormalTok{(}\StringTok{'mean'}\NormalTok{,}\StringTok{'median'}\NormalTok{),}
+       \DataTypeTok{fill =} \KeywordTok{c}\NormalTok{(}\StringTok{'blue'}\NormalTok{,}\StringTok{'red'}\NormalTok{),}\DataTypeTok{bty =} \StringTok{'n'}\NormalTok{) }\CommentTok{#no box in the legend}
+\end{Highlighting}
+\end{Shaded}
+
+A box plot is always welcome, specially considering that it does not
+need reference lines. Take a look:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bp=}\KeywordTok{boxplot}\NormalTok{(meanValues,}\DataTypeTok{horizontal =}\NormalTok{ T,}\DataTypeTok{ylim=}\KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{30}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Our plots for the mean values have a more symmetrical shape. This
+happens when you get mean values of groups, showing a tendency towards a
+bell-shaped distribution, which is ideally known as the \emph{Gauss} or
+\emph{Normal} distribution.
+
+Notice also that boxplots serve to detect \textbf{atypical} values
+(outliers), which I saved in \emph{bp}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bp}\OperatorTok{$}\NormalTok{out}
+\end{Highlighting}
+\end{Shaded}
+
+We could annotate the boxplot like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxplot}\NormalTok{(meanValues,}\DataTypeTok{horizontal =}\NormalTok{ T,}\DataTypeTok{ylim=}\KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{30}\NormalTok{))}
+\KeywordTok{text}\NormalTok{(}\DataTypeTok{x=} \DecValTok{10}\NormalTok{, }\DataTypeTok{y=} \FloatTok{0.8}\NormalTok{, }\DataTypeTok{labels=} \StringTok{"Outliers are:"}\NormalTok{,}\DataTypeTok{col=}\StringTok{'gray'}\NormalTok{)}
+\KeywordTok{text}\NormalTok{(}\DataTypeTok{x=} \DecValTok{10}\NormalTok{, }\DataTypeTok{y=} \FloatTok{0.75}\NormalTok{, }
+     \DataTypeTok{labels=} \KeywordTok{paste}\NormalTok{(}\KeywordTok{names}\NormalTok{(bp}\OperatorTok{$}\NormalTok{out)[}\DecValTok{1}\NormalTok{], }\StringTok{'and'}\NormalTok{, }\KeywordTok{names}\NormalTok{(bp}\OperatorTok{$}\NormalTok{out)[}\DecValTok{2}\NormalTok{]),}
+     \DataTypeTok{col=}\StringTok{'gray'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+In general, measurements and counts are prone to have outliers. It is
+not common to speak about outliers in categorical data since they have
+few levels; however, if they had many levels, we could find outliers if
+the variable is ordinal.
+
+From what I said above, the subjective side of finding outliers lies in
+the decision of \textbf{what is normal}. In the case of the boxplot, the
+decision has been to accept as normal the values that have a
+\emph{prudent distance} from the first or last quartile. This distance
+is 1.5 times the difference between the quartiles (a.k.a. Interquartle
+Range or \textbf{IQR}). Then, if a outlier is found, the whisker ends in
+a position different than the actual minimum or maximal value of the
+data.
+
+{ Exercise: Do some research and make a histogram and a density plot
+using ggplot for the variable we just used above. }
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\protect\hyperlink{part1}{Go to table of contents.}
+
+\href{https://evansdatascience.github.io/VisualAnalytics/}{Back to
+course schedule menu}
+
+
+\end{document}
