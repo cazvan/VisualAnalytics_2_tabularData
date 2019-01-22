@@ -634,7 +634,7 @@ lolliplot1=base + geom_segment(aes(y = 0,
                                    xend = locale), color = "grey50") 
 lolliplot1 + geom_point()
 ```
-```{r}
+
 ```{r annot_gg, eval=TRUE}
 plot6 = plot5 + geom_text(aes(y = pct ,
                             label = paste0(round(pct,2), '%')),
