@@ -1,23 +1,99 @@
----
-title: "R Notebook"
-output: html_notebook
----
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
-
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
 
 ```{r}
-plot(cars)
+link="https://github.com/cazvan/VisualAnalytics_2_tabularData/blob/master/Small%20Dataset-Caz/policylong.dta?raw=true"
+install.packages("haven")
 ```
-
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
-
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
-
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
 
 ```{r}
-link='https://github.com/cazvan/VisualAnalytics_2_tabularData/blob/master/BRFSS%20Mental%20Health%20Data-Caz/policylong.dta?raw=true'
+library(haven)
+policylong=read_dta(link)
 ```
+
+```{r}
+names(policylong)
+```
+```{r}
+#dimensions
+dim(policylong)
+```
+```{r}
+str(policylong)
+```
+```{r}
+table(policylong$state)
+```
+
+```{r}
+# relative values
+stname=table(policylong$stname,exclude = 'nothing')
+prop.table(stname)
+```
+
+```{r}
+# the pie plots the table:
+pieplot=prop.table(stname)
+pie(pieplot)
+``` 
+```{r}
+currentyear=policylong[policylong$year=="2018",]
+```
+
+```{r}
+poliWA=policylong[policylong$stname=="Washington",]
+```
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+barplot(policylong$ex)
+```
+
+
+```{r}
+# WIP yearex=policylong[policylong]
+barplot(poliWA$ex)
+```
+
+
+
+```{r}
+table(poliWA$ex)
+```
+
+```{r}
+pieplot=prop.table(waex)
+pie(pieplot)
+
+barplot(stname,
+         col = paletteHere,
+         main=titleText,
+         sub=sourceText)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+#this works for older stat files
+library(foreign)
+policylong=read.dta(link)
+```
+
+```{r}
+# For opening csv files:
+mydata=read.csv(link)
+```
+
 
