@@ -1,56 +1,89 @@
-
+Caz VanDevere
+Week 3 Exercises
+599B Data Visualization
+January 23, 2019
 
 ```{r}
-link="https://github.com/cazvan/VisualAnalytics_2_tabularData/blob/master/Small%20Dataset-Caz/policylong.dta?raw=true"
+#call libraries:
 install.packages("haven")
-
-link2='https://github.com/cazvan/VisualAnalytics_2_tabularData/raw/master/Small%20Dataset-Caz/policywide.dta'
-```
-
-```{r}
 library(haven)
-policylong=read_dta(link)
-policywide=read_dta(link2)
-```
-
-```{r}
-names(policylong)
-```
-```{r}
-#dimensions
-dim(policylong)
-```
-```{r}
-str(policylong)
-```
-```{r}
-table(policylong$state)
-```
-
-```{r}
-# relative values
-stname=table(policylong$stname,exclude = 'nothing')
-prop.table(stname)
-```
-
-```{r}
-# the pie plots the table:
-pieplot=prop.table(stname)
-pie(pieplot)
-``` 
-```{r}
-currentyear=policylong[policylong$year=="2018",]
-```
-
-```{r}
-poliWA=policylong[policylong$stname=="Washington",]
-```
-
-```{r}
 library(ggplot2)
 ```
 
 ```{r}
+#call datasets:
+link="https://github.com/cazvan/VisualAnalytics_2_tabularData/raw/master/Small%20Dataset-Caz/policylong.dta"
+link2='https://github.com/cazvan/VisualAnalytics_2_tabularData/raw/master/Small%20Dataset-Caz/policywide.dta'
+link3='https://github.com/cazvan/VisualAnalytics_2_tabularData/raw/master/Small%20Dataset-Caz/statedata.dta'
+policylong=read_dta(link)
+policywide=read_dta(link2)
+statedata=read_dta(link3)
+```
+
+```{r}
+poliWA=policylong[policylong$stname=="Washington",]
+titletext="Total years since 2000 that Washington has had expanded Medicaid"
+sourcetext="Source: Kaiser Family Foundation"
+#" Status of State Action on the Medicaid Expansion Decision. November 26, 2018."
+#https://www.kff.org/health-reform/state-indicator/state-activity-around-expanding-medicaid-under-the-af fordable-care-act/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22as c%22%7D
+
+# WIP yearex=policylong[policylong]
+#barplot(table(poliWA$ex))
+
+color=rainbow(length(ToPlot)) # customizing set of colors
+waex=table(poliWA$ex)
+names(waex)=c("No expansion","Expansion")
+barplot(waex,
+         col = color,
+         main=titletext,
+         sub=sourcetext,
+        ylim=c(0,18),
+        ylab = '(number of years)',
+        )
+legend(1.6, 14,
+  legend = c("Did not expand ACA", "Expanded ACA"),
+  fill=color,
+)
+```
+```{r}
+#Get stuff set up:
+plotthis=table(poliWA$ex)
+table1=as.data.frame(plotthis)
+names(table1)=c("ex","years")
+table1
+
+#make the plot:
+base = ggplot(table1, aes(x=ex,y=years,color='red')) 
+lolliplot=base + geom_segment(aes(y = 0,
+                                  x = ex,
+                                  xend=ex,
+                                  yend=years),
+                              ) 
+lolliplot + geom_point()
+```
+
+
+
+#Notes/experiments:
+#dimensions
+dim(policylong)
+
+str(policylong)
+
+table(policylong$state)
+
+# relative values
+emrate=table(statedata$employedrate,exclude = 'nothing')
+prop.table(emrate)
+
+# relative values
+stname=table(policylong$stname,exclude = 'nothing')
+prop.table(stname)
+
+# Cool super beautiful pie chart:
+pieplot=prop.table(stname)
+pie(pieplot)
+
 zero=policylong[policylong$year=="2000",]
 one=policylong[policylong$year=="2001",]
 two=policylong[policylong$year=="2002",]
@@ -66,59 +99,15 @@ eleven=policylong[policylong$year=="2011",]
 twelve=policylong[policylong$year=="2012",]
 thirteen=policylong[policylong$year=="2013",]
 fourteen=policylong[policylong$year=="2014",]
-```
 
-```{r}
-# WIP yearex=policylong[policylong]
-titletext="Total years since 2000 that Washington has had expanded Medicaid"
-barplot(table(poliWA$ex))
-
-```
-```{r}
 currentyear=policylong[policylong$year=="2018",]
-currentyes=currentyear[currentyear$ex==1,]
-```
 
-```{r}
-barplot(currentyear$ex)
-```
-
-```{r}
-table(poliWA$ex)
-```
-
-```{r}
-pieplot=prop.table(waex)
-pie(pieplot)
-
-barplot(stname,
-         col = paletteHere,
-         main=titleText,
-         sub=sourceText)
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-```{r}
 #this works for older stat files
 library(foreign)
 policylong=read.dta(link)
-```
 
-```{r}
 # For opening csv files:
 mydata=read.csv(link)
-```
+
 
 
