@@ -3,11 +3,14 @@
 ```{r}
 link="https://github.com/cazvan/VisualAnalytics_2_tabularData/blob/master/Small%20Dataset-Caz/policylong.dta?raw=true"
 install.packages("haven")
+
+link2='https://github.com/cazvan/VisualAnalytics_2_tabularData/raw/master/Small%20Dataset-Caz/policywide.dta'
 ```
 
 ```{r}
 library(haven)
 policylong=read_dta(link)
+policywide=read_dta(link2)
 ```
 
 ```{r}
@@ -48,16 +51,37 @@ library(ggplot2)
 ```
 
 ```{r}
-barplot(policylong$ex)
+zero=policylong[policylong$year=="2000",]
+one=policylong[policylong$year=="2001",]
+two=policylong[policylong$year=="2002",]
+three=policylong[policylong$year=="2003",]
+four=policylong[policylong$year=="2004",]
+five=policylong[policylong$year=="2005",]
+six=policylong[policylong$year=="2006",]
+seven=policylong[policylong$year=="2007",]
+eight=policylong[policylong$year=="2008",]
+nine=policylong[policylong$year=="2009",]
+ten=policylong[policylong$year=="2010",]
+eleven=policylong[policylong$year=="2011",]
+twelve=policylong[policylong$year=="2012",]
+thirteen=policylong[policylong$year=="2013",]
+fourteen=policylong[policylong$year=="2014",]
 ```
-
 
 ```{r}
 # WIP yearex=policylong[policylong]
-barplot(poliWA$ex)
+titletext="Total years since 2000 that Washington has had expanded Medicaid"
+barplot(table(poliWA$ex))
+
+```
+```{r}
+currentyear=policylong[policylong$year=="2018",]
+currentyes=currentyear[currentyear$ex==1,]
 ```
 
-
+```{r}
+barplot(currentyear$ex)
+```
 
 ```{r}
 table(poliWA$ex)
@@ -72,6 +96,7 @@ barplot(stname,
          main=titleText,
          sub=sourceText)
 ```
+
 
 
 
