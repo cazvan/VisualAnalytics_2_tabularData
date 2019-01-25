@@ -4,8 +4,13 @@ Week 3 Exercises
 January 23, 2019
 
 ```{r}
-#call libraries:
+#install libraries
 install.packages("haven")
+```
+
+
+```{r}
+#call libraries:
 library(haven)
 library(ggplot2)
 ```
@@ -15,36 +20,24 @@ library(ggplot2)
 link="https://github.com/cazvan/VisualAnalytics_2_tabularData/raw/master/Small%20Dataset-Caz/policylong.dta"
 link2='https://github.com/cazvan/VisualAnalytics_2_tabularData/raw/master/Small%20Dataset-Caz/policywide.dta'
 link3='https://github.com/cazvan/VisualAnalytics_2_tabularData/raw/master/Small%20Dataset-Caz/statedata.dta'
+link4='https://dl.dropboxusercontent.com/s/xhs2utpj1wntmzt/BRFSSFinalSup.dta'
+brfssdata=read_dta(link4)
 policylong=read_dta(link)
 policywide=read_dta(link2)
 statedata=read_dta(link3)
+brfssdata=read_dta(link4)
 ```
 
 ```{r}
-poliWA=policylong[policylong$stname=="Washington",]
-titletext="Total years since 2000 that Washington has had expanded Medicaid"
-sourcetext="Source: Kaiser Family Foundation"
-#" Status of State Action on the Medicaid Expansion Decision. November 26, 2018."
-#https://www.kff.org/health-reform/state-indicator/state-activity-around-expanding-medicaid-under-the-af fordable-care-act/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22as c%22%7D
-
-# WIP yearex=policylong[policylong]
-#barplot(table(poliWA$ex))
-
-color=rainbow(length(ToPlot)) # customizing set of colors
-waex=table(poliWA$ex)
-names(waex)=c("No expansion","Expansion")
-barplot(waex,
-         col = color,
-         main=titletext,
-         sub=sourcetext,
-        ylim=c(0,18),
-        ylab = '(number of years)',
-        )
-legend(1.6, 14,
-  legend = c("Did not expand ACA", "Expanded ACA"),
-  fill=color,
-)
+income=brfssdata[brfssdata$income]
+inc=table(income)
 ```
+
+```{r}
+
+```
+
+
 ```{r}
 #Get stuff set up:
 plotthis=table(poliWA$ex)
@@ -60,6 +53,43 @@ lolliplot=base + geom_segment(aes(y = 0,
                                   yend=years),
                               ) 
 lolliplot + geom_point()
+```
+
+```{r}
+# BARPLOT EXERCISE #1
+title2="Interview Month"
+source2="BRFSS Survey Data 2000-2018"
+color=rainbow(length(ToPlot)) # customizing set of colors
+
+year=table(brfssdata$year)
+barplot(year,col=color,main=title2,sub=source2,ylab='Number of Interviews',xlab="Year",)
+```
+
+```{r}
+titletext="Total years since 2000 that Washington has had expanded Medicaid"
+sourcetext="Source: Kaiser Family Foundation"
+#" Status of State Action on the Medicaid Expansion Decision. November 26, 2018."
+#https://www.kff.org/health-reform/state-indicator/state-activity-around-expanding-medicaid-under-the-af fordable-care-act/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22as c%22%7D
+
+# WIP yearex=policylong[policylong]
+#barplot(table(poliWA$ex))
+
+poliWA=policylong[policylong$stname=="Washington",]
+waex=table(poliWA$ex)
+
+color=rainbow(length(ToPlot)) # customizing set of colors
+names(waex)=c("No expansion","Expansion")
+barplot(waex,
+         col = color,
+         main=titletext,
+         sub=sourcetext,
+        ylim=c(0,18),
+        ylab = '(number of years)',
+        )
+legend(1.6, 14,
+  legend = c("Did not expand ACA", "Expanded ACA"),
+  fill=color,
+)
 ```
 
 
