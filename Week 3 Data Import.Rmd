@@ -25,12 +25,6 @@ brfssdata=read_dta(link4)
 policylong=read_dta(link)
 policywide=read_dta(link2)
 statedata=read_dta(link3)
-brfssdata=read_dta(link4)
-```
-
-```{r}
-income=brfssdata[brfssdata$income]
-inc=table(income)
 ```
 
 ```{r}
@@ -40,6 +34,7 @@ inc=table(income)
 
 ```{r}
 #Get stuff set up:
+poliWA=policylong[policylong$stname=="Washington",]
 plotthis=table(poliWA$ex)
 table1=as.data.frame(plotthis)
 names(table1)=c("ex","years")
