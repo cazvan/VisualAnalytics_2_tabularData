@@ -27,6 +27,35 @@ policywide=read_dta(link2)
 statedata=read_dta(link3)
 ```
 
+###########################################################################################
+############################ Week Two Exercises ###########################################
+###########################################################################################
+
+```{r}
+# 1) Use ggplot to show a bar plot ordered by share size:
+title2="Interview Month"
+source2="BRFSS Survey Data 2000-2018"
+color=rainbow(length(ToPlot)) # customizing set of colors
+
+year=table(brfssdata$year)
+yearord=sort(year)
+barplot(yearord,col=color,main=title2,sub=source2,ylab='Number of Interviews',xlab="Year",)
+```
+
+###########################################################################################
+############################ Week Three Exercises #########################################
+###########################################################################################
+
+```{r}
+# BARPLOT EXERCISE
+title2="Interview Month"
+source2="BRFSS Survey Data 2000-2018"
+color=rainbow(length(ToPlot)) # customizing set of colors
+
+year=table(brfssdata$year)
+barplot(year,col=color,main=title2,sub=source2,ylab='Number of Interviews',xlab="Year",)
+```
+
 ```{r}
 #LOLLIPLOT EXCERCISE
 waonly=brfssdata[brfssdata$stname=='Washington',]
@@ -44,22 +73,12 @@ lolliplot + geom_point()
 
 ```
 
-```{r}
-# BARPLOT EXERCISE #1
-title2="Interview Month"
-source2="BRFSS Survey Data 2000-2018"
-color=rainbow(length(ToPlot)) # customizing set of colors
-
-year=table(brfssdata$year)
-barplot(year,col=color,main=title2,sub=source2,ylab='Number of Interviews',xlab="Year",)
-```
-
 
 
 
 #########################################################################################################
 #####################  Everything Below This Line Is Practice ###########################################
-#########################################################################################################s
+#########################################################################################################
 
 
 
