@@ -28,12 +28,73 @@ statedata=read_dta(link3)
 ```
 
 ```{r}
+#LOLLIPLOT EXCERCISE
+waonly=brfssdata[brfssdata$stname=='Washington',]
+watable=table(waonly$mental)
+wadata=as.data.frame(watable)
+names(wadata)=c("mental1","total1")
+
+waplot=ggplot(wadata, aes(x=mental1,y=total1,))
+lolliplot=waplot + geom_segment(aes(y = 0,
+                                  x = mental1,
+                                  xend=mental1,
+                                  yend=total1),
+                              ) 
+lolliplot + geom_point()
 
 ```
 
+```{r}
+# BARPLOT EXERCISE #1
+title2="Interview Month"
+source2="BRFSS Survey Data 2000-2018"
+color=rainbow(length(ToPlot)) # customizing set of colors
+
+year=table(brfssdata$year)
+barplot(year,col=color,main=title2,sub=source2,ylab='Number of Interviews',xlab="Year",)
+```
+
+
+
+
+#########################################################################################################
+#####################  Everything Below This Line Is Practice ###########################################
+#########################################################################################################s
+
+
+
+
+```{r lolli_gg, eval=TRUE}
+#barplot guide:
+year=table(brfssdata$year)
+barplot(year,col=color,main=title2,sub=source2,ylab='Number of Interviews',xlab="Year",)
+
+#lolliplot guide:
+tableFreq[order(-tableFreq$pct),]
+tableFreqO=tableFreq[order(tableFreq$pct),]
+base = ggplot(tableFreq, aes(x=locale,pct)) 
+lolliplot1=base + geom_segment(aes(y = 0, 
+                                   x = locale, 
+                                   yend = pct, 
+                                   xend = locale), color = "grey50") 
+lolliplot1 + geom_point()
+
+tableFreq[order(tableFreq$pct),]
+
+# reordering DF steps:
+tableFreqO=tableFreq[order(tableFreq$pct),]
+
+
+base = ggplot(tableFreqO, aes(locale,pct)) 
+lolliplot1=base + geom_segment(aes(y = 0, 
+                                   x = locale, 
+                                   yend = pct, 
+                                   xend = locale), color = "gray") 
+lolliplot2 = lolliplot1 + geom_point()
+lolliplot2 + scale_x_discrete(limits=tableFreqO$locale) # key element
+```
 
 ```{r}
-#Get stuff set up:
 poliWA=policylong[policylong$stname=="Washington",]
 plotthis=table(poliWA$ex)
 table1=as.data.frame(plotthis)
@@ -48,16 +109,6 @@ lolliplot=base + geom_segment(aes(y = 0,
                                   yend=years),
                               ) 
 lolliplot + geom_point()
-```
-
-```{r}
-# BARPLOT EXERCISE #1
-title2="Interview Month"
-source2="BRFSS Survey Data 2000-2018"
-color=rainbow(length(ToPlot)) # customizing set of colors
-
-year=table(brfssdata$year)
-barplot(year,col=color,main=title2,sub=source2,ylab='Number of Interviews',xlab="Year",)
 ```
 
 ```{r}
