@@ -1,0 +1,501 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
+Caz VanDevere
+Week 3 Exercises
+599B Data Visualization
+January 23, 2019
+
+```{r eval=FALSE}
+#install libraries
+install.packages("haven")
+```
+
+```{r 2 eval=FALSE}
+#call libraries:
+library(haven)
+library(ggplot2)
+```
+
+```{r 3}
+#call datasets:
+link="https://github.com/cazvan/VisualAnalytics_2_tabularData/raw/master/Small%20Dataset-Caz/policylong.dta"
+link2='https://github.com/cazvan/VisualAnalytics_2_tabularData/raw/master/Small%20Dataset-Caz/policywide.dta'
+link3='https://github.com/cazvan/VisualAnalytics_2_tabularData/raw/master/Small%20Dataset-Caz/statedata.dta'
+link4='https://dl.dropboxusercontent.com/s/xhs2utpj1wntmzt/BRFSSFinalSup.dta'
+brfssdata=read_dta(link4)
+policylong=read_dta(link)
+policywide=read_dta(link2)
+statedata=read_dta(link3)
+```
+ ####################
+ ##### Exercises ####
+ ####################
+
+1) Use ggplot to show a bar plot ordered by share size.
+2) Complete adding the elements missing in the last plot. (title, source)
+3) Make sure our box plot follows the same design approach and include all the elements as in the bar plot for nominal data. 
+4) Make a histogram for the variable FREE LUNCH, and make sure it has all the right elements, and get rid of unnecessary elements.
+5) Do some research and make a histogram and a density plot using ggplot for the variable we just used above.
+
+ ####################
+ ##### Exercise #1 ##
+ ####################
+1) Use ggplot to show a bar plot ordered by share size:
+
+```{r ggplot}
+# barplot
+title2="Interview Month"
+source2="BRFSS Survey Data 2000-2018"
+color=rainbow(length(ToPlot)) # customizing set of colors
+year=table(brfssdata$year)
+yearord=sort(year)
+barplot(yearord,col=color,main=title2,sub=source2,ylab='Number of Interviews',xlab="Year",)
+
+yeargg=as.data.frame(yearord)
+names(yeargg)=c("Year","Frequency")
+yeargg
+yearplot=ggplot(data= yeargg, aes(x=Year, y=Frequency))
+yearplot2=yearplot + labs(title=title2, x=NULL, y=NULL,caption=source2)
+yearplot3 = yearplot2 + geom_hline(yintercept = 200000, #where
+                           linetype="dashed", 
+                           size=1.5, #thickness
+                           alpha=0.5) #transparency
+yearplot4 = yearplot3 + theme(panel.background = element_rect(fill = "white",
+                                                    colour = "grey50"),
+                    plot.caption = element_text(hjust = 0), # default was 1
+                    plot.title = element_text(hjust = 0.5))
+plotyear = yearplot4 + geom_bar(fill ="green",
+                        stat = 'identity')
+plotyear
+```
+
+ #########################
+ ####### Exercise #2 #####
+ #########################
+
+2) Complete adding the elements missing in the last plot. (lolliplot w/ reference line)
+
+```{r lolli_gg, eval=TRUE}
+base = ggplot(tableFreq, aes(x=locale,pct)) 
+lolliplot1=base + geom_segment(aes(y = 0, 
+                                   x = locale, 
+                                   yend = pct, 
+                                   xend = locale), color = "grey50") 
+lolliplot1 + geom_point()
+# And, if you order the data frame:
+tableFreq[order(tableFreq$pct),]
+#You can get:
+# reordering DF steps:
+tableFreqO=tableFreq[order(tableFreq$pct),]
+base = ggplot(tableFreqO, aes(locale,pct)) 
+lolliplot1=base + geom_segment(aes(y = 0, 
+                                   x = locale, 
+                                   yend = pct, 
+                                   xend = locale), color = "gray") 
+lolliplot2 = lolliplot1 + geom_point()
+lolliplot2 + scale_x_discrete(limits=tableFreqO$locale) # key element
+#And, what about changing the axis values so that we can identify the gaps:
+# new variable
+tableFreqO$gap=tableFreqO$pct-25
+# plot the new variable
+base = ggplot(tableFreqO, aes(locale,gap)) 
+lolliplot1=base + geom_segment(aes(y = 0, 
+                                   x = locale, 
+                                   yend = gap, 
+                                   xend = locale), color = "gray") 
+lolliplot2 = lolliplot1 + geom_point()
+lolliplot2 + scale_x_discrete(limits=tableFreqO$locale) # key element
+# Maybe add some color:
+# a new column for color
+tableFreqO$PositiveGap=ifelse(tableFreqO$gap>0,T,F)
+# add new aesthetics 'color'
+base = ggplot(tableFreqO, aes(locale,gap,
+                              color=PositiveGap)) #change
+lolliplot1=base + geom_segment(aes(y = 0, 
+                                   x = locale, 
+                                   yend = gap, 
+                                   xend = locale), color = "gray") 
+lolliplot2 = lolliplot1 + geom_point()
+lolliplot2 + scale_x_discrete(limits=tableFreqO$locale) # key element
+# Maybe add some extra info:
+# a new column for color
+tableFreqO$PositiveGap=ifelse(tableFreqO$gap>0,T,F)
+
+base = ggplot(tableFreqO, aes(locale,gap,color=PositiveGap,
+                              label = round(gap,3))) #  change
+lolliplot1=base + geom_segment(aes(y = 0, 
+                                   x = locale, 
+                                   yend = gap, 
+                                   xend = locale), color = "gray") 
+lolliplot2=lolliplot1 + geom_point() 
+lolliplot3= lolliplot2 + scale_x_discrete(limits=tableFreqO$locale) 
+# annotating and moving the text on the horizontal
+lolliplot3 + geom_text(nudge_x=0.3) 
+# You can avoid the overlaping symbols in the legend by using:
+lolliplot3 + geom_text(nudge_x=0.3,show.legend = FALSE) 
+
+title3="Are all locations getting fair share of public schools in WA?"
+source3="Source: Jose Magallanes, Accomplished Data Scientist"
+lolliplot4=lolliplot3 + labs(title=title3, x='Location', y='Percent based off 25% baseline',caption=source3)
+lolliplot4 + geom_text(nudge_x=0.3,show.legend = FALSE)
+```
+ #######################
+ ##### Exercise #3 #####
+ #######################
+3) Make sure our box plot follows the same design approach and include all the elements as in the bar plot for nominal data.
+
+```{r nudge_gg2, eval=TRUE}
+#### <span style="color:blue"> 2. Visualization for ordinal scales</span>
+#For this section, we will use the variable that tells us the highest grade offered in a school. A simple exploration gives:
+table(eduwa$High.Grade,exclude = 'nothing')
+#Being a categorical variable, the default option is again the bar plot. So let's prepare the frequency table as a data frame:
+frqTabO=as.data.frame(prop.table(table(eduwa$High.Grade)))
+names(frqTabO)=c('grade','pct')
+frqTabO
+#Now, we can use ggplot:
+base = ggplot(frqTabO,aes(x=grade,y=pct))
+base + geom_bar(stat = 'identity') 
+#The x-values in this variable have **order**. That is, there is an increasing level in the values. Whenever we have an ordering, besides *concentration* we can visualize **symmetry**: if there is bias towards lower or higher values. 
+#Bar plots help you see concentration and symmetry, but we have an alternative way to clearly detect symmetry, via **boxplots**:
+# boxplots do not use frequency tables
+# as.numeric produces turns levels of the factor into numbers
+box1 = ggplot(eduwa, aes(y=as.numeric(High.Grade))) 
+box1 = box1 + geom_boxplot() + coord_flip() # to show it horizontally
+box1
+#You have symmetry when the distance of those whiskers to the  box is the same, and when the thick line is in the middle of the box. You can see that the values show a negative asymmetry (tail to the left).
+#Box plots expect a numeric value as an input, but we have an ordered categorical, so we used the _as.numeric()_ function. However, that eliminated the levels we saw in the previous bar plot; we can put the levels back in our plot:
+# the labels use the original ordinal levels
+ordLabels= levels(eduwa$High.Grade)
+box2 = box1 + scale_y_continuous(labels=ordLabels,breaks=1:15)
+box2
+
+#Box plots have important statistical information. The beginning and the ending of the box indicates the first (q1) and the third quantile (q75); and the thicker line in the middle represents the median. All those values are clearly visible, but we can retrieve the values like this:
+#get positions
+# using 'ggplot_build'
+pos_q1=     ggplot_build(box2)$data[[1]]$lower
+pos_median= ggplot_build(box2)$data[[1]]$middle
+pos_q3=     ggplot_build(box2)$data[[1]]$upper
+# using
+levels(eduwa$High.Grade)[c(pos_q1,pos_median,pos_q3)]
+#From the information retrieved, we know:
+#* 25% of the public Schools offer at most 5th GRADE. 
+#* 50% of the public Schools offer at most 8th GRADE.
+#* 75% of the public Schools offer at most 12th GRADE. Also, 25% of the schools offer at least 12th grade.
+#We can find these results with a _detailed_ frequency table; that is, instead of using the command _table_ as we did before, we could try a more advanced function:
+library(summarytools)
+freq(eduwa$High.Grade,style = 'rmarkdown')
+
+title4="What are the highest grades offered in schools in WA?"
+source4="Source: Jose Magallanes, Excellent Data Analyst"
+box3=box2 + labs(title=title4, y='Highest Grade Offered', x=NULL,caption=source4) + theme(axis.title.y=element_blank(),axis.text.y=element_blank(),axis.ticks.y=element_blank())
+box3
+```
+ ######################
+ #### Exercise #4 #####
+ ######################
+ 
+4) Make a histogram for the variable FREE LUNCH, and make sure it has all the right elements, and get rid of unnecessary elements.
+
+```{r unique, eval=TRUE}
+#Counting expresses numerical values. They could be represented with bar plots if their frequency table had few different values. For example, the variable _Reduced.Lunch_ informs how many kids there are in each school that have that lunch for a reduced price.
+# how many unique values
+length(unique(eduwa$Reduced.Lunch))
+#There are too many different values. Then, the bar plot is not a good idea (and neither a frequency table):
+barplot(table(eduwa$Reduced.Lunch),las=2,cex.names = 0.3,
+        main='bad idea')
+#On the other hand, when we have a numerical variable, there are more statistical values that help understand its behavior:
+# median close to mean?
+# median and mean far from max or min?
+# q1 distance to min is similar ti q3 distance to max?
+# how many missing?
+summary(eduwa$Reduced.Lunch)
+#The bar plot produces a bar for each unique value in the data, counting how many times this value appeared. Now, we have many values, so we need to organize the data into _intervals_. The **histogram** is the basic plot when intervals are needed, you can use the basic function:
+eduwa3=eduwa[complete.cases(eduwa$Reduced.Lunch),]
+dataHist=hist(eduwa3$Reduced.Lunch) #saving info in dataHist
+#The width of each **bin** (bar) represents an interval of values, while its height the frequency. The histogram shows an asymmetric shape, where the bin with lowest values of the variable (between 0 and 20) are the most common (above 1000).
+#Of course, ggplot has a version of histograms:
+baselunch= ggplot(eduwa3,aes(x = Reduced.Lunch))  
+h1= baselunch + geom_histogram()
+h1 
+#Notice that you do not get the same plot. Let's see the info from the basic function:
+dataHist
+#And now see the info that was used in ggplot:
+ggplot_build(h1)$data[[1]]
+#The first 'x' was 0 in ggplot, while it was 10 (in _$mids_) in the base graphic; from there on everything changed. And not only that, you have 16 bins in the base graphic, while you got 30 in ggplot. 
+#Of course, you can alter that in both alternatives.
+#Below, you can see a version where both plots are the same:
+#ggplot
+base= ggplot(eduwa3,aes(x = Reduced.Lunch))  
+h1= base + geom_histogram(binwidth = 20,boundary=0) #changing width
+h1= h1 + stat_bin(binwidth = 20, aes(label=..count..), 
+                  geom = "text",boundary = 0,vjust=-0.5)
+h1
+# base
+hist(eduwa3$Reduced.Lunch,labels = T,xlab="Reduced Lunch")
+#Of course, you can make it a litle better:
+hist(eduwa3$Reduced.Lunch,labels = T,xlab="Reduced Lunch", xaxt="n") 
+axis(side=1, at=dataHist$breaks) # showing axis labels better
+#As mentioned before, we are plotting intervals, so the accompanying table can be built. For that, we first create the intervals into another variable:
+eduwa3$redLunchOrd=cut(eduwa3$Reduced.Lunch,
+                       breaks = dataHist$breaks,
+                       include.lowest = T,
+                       ordered_result = T)
+#And, as before, we use the _freq_ function:
+# no need to show count of NAs:
+freq(eduwa3$redLunchOrd,style = 'rmarkdown',report.nas = F)
+length(unique(eduwa$Free.Lunch))
+eduwa4=eduwa[complete.cases(eduwa$Free.Lunch),]
+dataHist=hist(eduwa4$Free.Lunch)
+hist(eduwa3$Free.Lunch,labels = T,xlab="Free Lunch", xaxt="n") 
+axis(side=1, at=dataHist$breaks)
+
+basefree= ggplot(eduwa3,aes(x = Free.Lunch))  
+h2= basefree + geom_histogram(binwidth = 150,boundary=0) #changing width
+h2= h2 + stat_bin(binwidth = 150, aes(label=..count..), 
+                  geom = "text",boundary = 0,vjust=-0.5)
+title4="How many kids in each school receive free lunch?"
+source4="Source: Jose Magallanes, Data Afficionado"
+h3=h2 + labs(title=title4, x='Schools', y='Frequency',caption=source4)
+h3
+```
+
+##########################
+####### Exercise #5 ######
+##########################
+
+5) Do some research and make a histogram and a density plot using ggplot for the variable we just used above.
+
+```{r tapply,  eval=TRUE}
+### Measurement
+#A simplistic idea of measurement tells you the times a particular unit is present in the unit of analysis; which allows for the presence of decimal places. There are variables that can have negative values.
+#Let's analyze the variable _Student.Teacher.Ratio_, but organized by county:
+# tapply(variable,group,functionToApply)
+tapply(eduwa$Student.Teacher.Ratio, eduwa$County, mean)
+#Above, I tried to compute the mean for each county, but the function _mean()_ outputs a missing value (_NA_) as the result when there is one _NA_ in the column:
+# strategy 1: remove missing before computing function: na.rm=T
+tapply(eduwa$Student.Teacher.Ratio, eduwa$County, mean,na.rm=T)
+#Of course, you can clean first:
+# strategy 2: 
+eduwa4=eduwa[complete.cases(eduwa$Student.Teacher.Ratio),]
+tapply(eduwa4$Student.Teacher.Ratio, 
+       eduwa4$County, 
+       mean)
+#Great!
+#Now let me plot a histogram of those means:
+# keeping strategy 2: 
+meanValues=tapply(eduwa4$Student.Teacher.Ratio, 
+                  eduwa4$County, 
+                  mean)
+hist(meanValues)
+#Let's compute some statistics:
+summary(meanValues)
+#You can use that info, for example, to plot the mean as a reference line:
+#reference line
+hist(meanValues)
+abline(v=mean(meanValues),lty=3,lwd=3,col='blue')
+
+#Measurements are continuous values, then a **density** plot is more appealing to its nature:
+mvDense=density(meanValues)
+plot(mvDense,main="Title",col='black',xlab=NA)
+abline(v=mean(meanValues),lty=3,lwd=3,col='blue') #mean
+abline(v=median(meanValues),lty=3,lwd=3,col='red')#median
+legend(x="right",
+       legend=c('mean','median'),
+       fill = c('blue','red'),bty = 'n') #no box in the legend
+#A box plot is always welcome, specially considering that it does not need reference lines. Take a look:
+bp=boxplot(meanValues,horizontal = T,ylim=c(5,30))
+#Our plots for the mean values have a more symmetrical shape. This happens when you get mean values of groups, showing a tendency towards a bell-shaped distribution, which is ideally known as the _Gauss_ or _Normal_  distribution.
+#Notice also that boxplots serve to detect **atypical** values (outliers), which I saved in _bp_: 
+bp$out
+#We could annotate the boxplot like this:
+boxplot(meanValues,horizontal = T,ylim=c(5,30))
+text(x= 10, y= 0.8, labels= "Outliers are:",col='gray')
+text(x= 10, y= 0.75, 
+     labels= paste(names(bp$out)[1], 'and', names(bp$out)[2]),
+     col='gray')
+#In general, measurements and counts are prone to have outliers. It is not common to speak about outliers in categorical data since they have few levels; however, if they had many levels, we could find outliers if the variable is ordinal.
+
+#From what I said above, the subjective side of finding outliers lies in the decision of **what is normal**. In the case of the boxplot, the decision has been to accept as normal the values that have a *prudent distance* from the first or last quartile. This distance is 1.5 times the difference between the quartiles (a.k.a. Interquartle Range or **IQR**). Then, if an outlier is found, the whisker ends in a position different than the actual minimum or maximal value of the data.
+```
+
+```{r}
+tapply(eduwa$Student.Teacher.Ratio, eduwa$County, mean,na.rm=T)
+#Of course, you can clean first:
+# strategy 2: 
+eduwa4=eduwa[complete.cases(eduwa$Student.Teacher.Ratio),]
+tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean)
+meanValues=tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean)
+cnties=eduwa[complete.cases(eduwa$County),]
+cnties
+```
+hist(meanValues)
+abline(v=mean(meanValues),lty=3,lwd=3,col='blue')
+
+ratioframe=as.data.frame(meanValues)
+names(ratioframe)=c("Averages")
+ratioframe
+
+baseratio = ggplot(ratioframe,aes(x = Averages, y = eduwa4$County))  
+title5="How many kids in each school receive free lunch?"
+source5="Source: Jose Magallanes, Data Afficionado"
+r1 = baseratio + geom_histogram(binwidth = 10,boundary=0) #changing width
+r1
+```
+
+r2=r1 + labs(title=title4, x='Schools', y='Frequency',caption=source4)
+# r2= r2 + stat_bin(binwidth = 150, aes(label=..count..),geom = "text",boundary = 0,vjust=-0.5)
+
+year=table(brfssdata$year)
+yearord=sort(year)
+yeargg=as.data.frame(yearord)
+names(yeargg)=c("Year","Frequency")
+yeargg
+yearplot=ggplot(data= yeargg, aes(x=Year, y=Frequency))
+yearplot2=yearplot + labs(title=title2, x=NULL, y=NULL,caption=source2)
+yearplot3 = yearplot2 + geom_hline(yintercept = 200000, #where
+                           linetype="dashed", 
+                           size=1.5, #thickness
+                           alpha=0.5) #transparency
+yearplot4 = yearplot3 + theme(panel.background = element_rect(fill = "white",
+                                                    colour = "grey50"),
+                    plot.caption = element_text(hjust = 0), # default was 1
+                    plot.title = element_text(hjust = 0.5))
+plotyear = yearplot4 + geom_bar(fill ="green",
+                        stat = 'identity')
+plotyear
+
+r2
+```
+
+
+####################################################################
+#####################  Everything Below This Line Is Practice  #####
+####################################################################
+
+
+```{r lolli_gg, eval=TRUE}
+#barplot guide:
+year=table(brfssdata$year)
+barplot(year,col=color,main=title2,sub=source2,ylab='Number of Interviews',xlab="Year",)
+
+#lolliplot guide:
+tableFreq[order(-tableFreq$pct),]
+tableFreqO=tableFreq[order(tableFreq$pct),]
+base = ggplot(tableFreq, aes(x=locale,pct)) 
+lolliplot1=base + geom_segment(aes(y = 0, 
+                                   x = locale, 
+                                   yend = pct, 
+                                   xend = locale), color = "grey50") 
+lolliplot1 + geom_point()
+
+tableFreq[order(tableFreq$pct),]
+
+# reordering DF steps:
+tableFreqO=tableFreq[order(tableFreq$pct),]
+
+
+base = ggplot(tableFreqO, aes(locale,pct)) 
+lolliplot1=base + geom_segment(aes(y = 0, 
+                                   x = locale, 
+                                   yend = pct, 
+                                   xend = locale), color = "gray") 
+lolliplot2 = lolliplot1 + geom_point()
+lolliplot2 + scale_x_discrete(limits=tableFreqO$locale) # key element
+```
+
+```{r 5}
+poliWA=policylong[policylong$stname=="Washington",]
+plotthis=table(poliWA$ex)
+table1=as.data.frame(plotthis)
+names(table1)=c("ex","years")
+table1
+
+#make the plot:
+base = ggplot(table1, aes(x=ex,y=years,color='red')) 
+lolliplot=base + geom_segment(aes(y = 0,
+                                  x = ex,
+                                  xend=ex,
+                                  yend=years),
+                              ) 
+lolliplot + geom_point()
+```
+
+```{r 6}
+titletext="Total years since 2000 that Washington has had expanded Medicaid"
+sourcetext="Source: Kaiser Family Foundation"
+#" Status of State Action on the Medicaid Expansion Decision. November 26, 2018."
+#https://www.kff.org/health-reform/state-indicator/state-activity-around-expanding-medicaid-under-the-af fordable-care-act/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22as c%22%7D
+
+# WIP yearex=policylong[policylong]
+#barplot(table(poliWA$ex))
+
+poliWA=policylong[policylong$stname=="Washington",]
+waex=table(poliWA$ex)
+
+color=rainbow(length(ToPlot)) # customizing set of colors
+names(waex)=c("No expansion","Expansion")
+barplot(waex,
+         col = color,
+         main=titletext,
+         sub=sourcetext,
+        ylim=c(0,18),
+        ylab = '(number of years)',
+        )
+legend(1.6, 14,
+  legend = c("Did not expand ACA", "Expanded ACA"),
+  fill=color,
+)
+```
+
+
+
+#Notes/experiments:
+#dimensions
+dim(policylong)
+
+str(policylong)
+
+table(policylong$state)
+
+# relative values
+emrate=table(statedata$employedrate,exclude = 'nothing')
+prop.table(emrate)
+
+# relative values
+stname=table(policylong$stname,exclude = 'nothing')
+prop.table(stname)
+
+# Cool super beautiful pie chart:
+pieplot=prop.table(stname)
+pie(pieplot)
+
+zero=policylong[policylong$year=="2000",]
+one=policylong[policylong$year=="2001",]
+two=policylong[policylong$year=="2002",]
+three=policylong[policylong$year=="2003",]
+four=policylong[policylong$year=="2004",]
+five=policylong[policylong$year=="2005",]
+six=policylong[policylong$year=="2006",]
+seven=policylong[policylong$year=="2007",]
+eight=policylong[policylong$year=="2008",]
+nine=policylong[policylong$year=="2009",]
+ten=policylong[policylong$year=="2010",]
+eleven=policylong[policylong$year=="2011",]
+twelve=policylong[policylong$year=="2012",]
+thirteen=policylong[policylong$year=="2013",]
+fourteen=policylong[policylong$year=="2014",]
+
+currentyear=policylong[policylong$year=="2018",]
+
+#this works for older stat files
+library(foreign)
+policylong=read.dta(link)
+
+# For opening csv files:
+mydata=read.csv(link)
+
+
+

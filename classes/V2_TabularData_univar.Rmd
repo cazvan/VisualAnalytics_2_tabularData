@@ -763,7 +763,7 @@ box1 = box1 + geom_boxplot() + coord_flip() # to show it horizontally
 box1
 ```
 
-You have symmetry when the distance of those whiskers to the  box is the same, and when the thick line is in the middle of the box. You can see that the values show a negative asymmetry (tail to the left).
+You have symmetry when the distance of those whiskers to the box is the same, and when the thick line is in the middle of the box. You can see that the values show a negative asymmetry (tail to the left).
 
 Box plots expect a numeric value as an input, but we have an ordered categorical, so we used the _as.numeric()_ function. However, that eliminated the levels we saw in the previous bar plot; we can put the levels back in our plot:
 
