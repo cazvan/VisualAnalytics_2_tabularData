@@ -328,10 +328,6 @@ year=table(brfssdata$year)
 yearord=sort(year)
 barplot(yearord,col=color,main=title2,sub=source2,ylab='Number of Interviews',xlab="Year",)
 
-year=table(brfssdata$year)
-yearord=sort(year)
-yeargg=as.data.frame(yearord)
-names(yeargg)=c("Year","Frequency")
 yeargg=as.data.frame(yearord)
 names(yeargg)=c("Year","Frequency")
 yeargg
@@ -354,9 +350,9 @@ tapply(eduwa$Student.Teacher.Ratio, eduwa$County, mean,na.rm=T)
 eduwa4=eduwa[complete.cases(eduwa$Student.Teacher.Ratio),]
 tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean)
 meanValues=tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean)
+
 hist(meanValues)
 summary(meanValues)
-hist(meanValues)
 ```
 
 ```{r answer}
@@ -366,25 +362,16 @@ tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean)
 meanValues=tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean)
 hist(meanValues)
 meanValues
-mv=as.data.frame(meanValues, row.names = levels(eduwa$County))
 mv
-yeargg
-yearord
-```
 
-```{r}
-mv=as.data.frame(meanValues)
+mv=as.data.frame(tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean))
+mv1=as.data.frame(meanValues)
+mv1
 counties=as.data.frame(unique(eduwa$County))
-mv
 counties
-
-
-```
-
-names(mv)=c('County','Average')
 mv
-yearplot=ggplot(data= mv, aes(x=County, y=Mean))
-yearplot
+tab=as.data.frame(sort(unique(eduwa4$County)))
+tab
 ```
 
 
@@ -472,9 +459,7 @@ legend(1.6, 14,
 #Notes/experiments:
 #dimensions
 dim(policylong)
-
 str(policylong)
-
 table(policylong$state)
 
 # relative values
@@ -488,24 +473,6 @@ prop.table(stname)
 # Cool super beautiful pie chart:
 pieplot=prop.table(stname)
 pie(pieplot)
-
-zero=policylong[policylong$year=="2000",]
-one=policylong[policylong$year=="2001",]
-two=policylong[policylong$year=="2002",]
-three=policylong[policylong$year=="2003",]
-four=policylong[policylong$year=="2004",]
-five=policylong[policylong$year=="2005",]
-six=policylong[policylong$year=="2006",]
-seven=policylong[policylong$year=="2007",]
-eight=policylong[policylong$year=="2008",]
-nine=policylong[policylong$year=="2009",]
-ten=policylong[policylong$year=="2010",]
-eleven=policylong[policylong$year=="2011",]
-twelve=policylong[policylong$year=="2012",]
-thirteen=policylong[policylong$year=="2013",]
-fourteen=policylong[policylong$year=="2014",]
-
-currentyear=policylong[policylong$year=="2018",]
 
 #this works for older stat files
 library(foreign)
