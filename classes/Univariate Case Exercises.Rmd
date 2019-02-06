@@ -367,11 +367,15 @@ mv
 mv=as.data.frame(tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean))
 mv1=as.data.frame(meanValues)
 mv1
-counties=as.data.frame(unique(eduwa$County))
+counties=as.data.frame(unique(eduwa4$County))
 counties
 mv
 tab=as.data.frame(sort(unique(eduwa4$County)))
 tab
+
+#cplot= ggplot(eduwa4,aes(x = mv))  
+#final=cplot + geom_histogram()
+#final
 ```
 
 
