@@ -317,7 +317,29 @@ text(x= 10, y= 0.75,
 #In general, measurements and counts are prone to have outliers. It is not common to speak about outliers in categorical data since they have few levels; however, if they had many levels, we could find outliers if the variable is ordinal.
 
 #From what I said above, the subjective side of finding outliers lies in the decision of **what is normal**. In the case of the boxplot, the decision has been to accept as normal the values that have a *prudent distance* from the first or last quartile. This distance is 1.5 times the difference between the quartiles (a.k.a. Interquartle Range or **IQR**). Then, if an outlier is found, the whisker ends in a position different than the actual minimum or maximal value of the data.
+
+############ ANSWER ################
+
+mv=as.data.frame(meanValues)
+names(mv)=c("STratio")
+head(mv)
+
+title5="What is the student to teacher ratio at different schools?"
+source5="Professor Magallanes, Data Maestro"
+
+basemv=ggplot(mv,aes(x=STratio))
+ratio2=basemv + labs(title=title5, x='Students per teacher', y='Frequency of Schools',caption=source5)
+
+
+ratio2+geom_histogram()
+ratio2+geom_density()
 ```
+
+
+
+
+
+
 
 ```{r}
 ##### barplot
@@ -342,43 +364,7 @@ yearplot4 = yearplot3 + theme(panel.background = element_rect(fill = "white",col
                     plot.title = element_text(hjust = 0.5))
 plotyear = yearplot4 + geom_bar(fill ="green",stat = 'identity')
 plotyear
-#####
-#####
-#Above, I tried to compute the mean for each county, but the function _mean()_ outputs a missing value (_NA_) as the result when there is one _NA_ in the column:
-# strategy 1: remove missing before computing function: na.rm=T
-tapply(eduwa$Student.Teacher.Ratio, eduwa$County, mean,na.rm=T)
-eduwa4=eduwa[complete.cases(eduwa$Student.Teacher.Ratio),]
-tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean)
-meanValues=tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean)
-
-hist(meanValues)
-summary(meanValues)
 ```
-
-```{r answer}
-tapply(eduwa$Student.Teacher.Ratio, eduwa$County, mean,na.rm=T)
-eduwa4=eduwa[complete.cases(eduwa$Student.Teacher.Ratio),]
-tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean)
-meanValues=tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean)
-hist(meanValues)
-meanValues
-mv
-
-mv=as.data.frame(tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean))
-mv1=as.data.frame(meanValues)
-mv1
-counties=as.data.frame(unique(eduwa4$County))
-counties
-mv
-tab=as.data.frame(sort(unique(eduwa4$County)))
-tab
-
-#cplot= ggplot(eduwa4,aes(x = mv))  
-#final=cplot + geom_histogram()
-#final
-```
-
-
 ####################################################################
 #####################  Everything Below This Line Is Practice  #####
 ####################################################################
