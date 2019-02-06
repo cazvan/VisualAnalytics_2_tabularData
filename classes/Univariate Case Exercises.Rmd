@@ -274,21 +274,19 @@ h3
 #Let's analyze the variable _Student.Teacher.Ratio_, but organized by county:
 # tapply(variable,group,functionToApply)
 tapply(eduwa$Student.Teacher.Ratio, eduwa$County, mean)
+
 #Above, I tried to compute the mean for each county, but the function _mean()_ outputs a missing value (_NA_) as the result when there is one _NA_ in the column:
 # strategy 1: remove missing before computing function: na.rm=T
 tapply(eduwa$Student.Teacher.Ratio, eduwa$County, mean,na.rm=T)
+
 #Of course, you can clean first:
 # strategy 2: 
 eduwa4=eduwa[complete.cases(eduwa$Student.Teacher.Ratio),]
-tapply(eduwa4$Student.Teacher.Ratio, 
-       eduwa4$County, 
-       mean)
+tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean)
 #Great!
 #Now let me plot a histogram of those means:
 # keeping strategy 2: 
-meanValues=tapply(eduwa4$Student.Teacher.Ratio, 
-                  eduwa4$County, 
-                  mean)
+meanValues=tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean)
 hist(meanValues)
 #Let's compute some statistics:
 summary(meanValues)
@@ -322,34 +320,18 @@ text(x= 10, y= 0.75,
 ```
 
 ```{r}
-tapply(eduwa$Student.Teacher.Ratio, eduwa$County, mean,na.rm=T)
-#Of course, you can clean first:
-# strategy 2: 
-eduwa4=eduwa[complete.cases(eduwa$Student.Teacher.Ratio),]
-tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean)
-meanValues=tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean)
-cnties=eduwa[complete.cases(eduwa$County),]
-cnties
-```
-hist(meanValues)
-abline(v=mean(meanValues),lty=3,lwd=3,col='blue')
-
-ratioframe=as.data.frame(meanValues)
-names(ratioframe)=c("Averages")
-ratioframe
-
-baseratio = ggplot(ratioframe,aes(x = Averages, y = eduwa4$County))  
-title5="How many kids in each school receive free lunch?"
-source5="Source: Jose Magallanes, Data Afficionado"
-r1 = baseratio + geom_histogram(binwidth = 10,boundary=0) #changing width
-r1
-```
-
-r2=r1 + labs(title=title4, x='Schools', y='Frequency',caption=source4)
-# r2= r2 + stat_bin(binwidth = 150, aes(label=..count..),geom = "text",boundary = 0,vjust=-0.5)
+##### barplot
+title2="Interview Month"
+source2="BRFSS Survey Data 2000-2018"
+color=rainbow(length(ToPlot)) # customizing set of colors
+year=table(brfssdata$year)
+yearord=sort(year)
+barplot(yearord,col=color,main=title2,sub=source2,ylab='Number of Interviews',xlab="Year",)
 
 year=table(brfssdata$year)
 yearord=sort(year)
+yeargg=as.data.frame(yearord)
+names(yeargg)=c("Year","Frequency")
 yeargg=as.data.frame(yearord)
 names(yeargg)=c("Year","Frequency")
 yeargg
@@ -359,15 +341,50 @@ yearplot3 = yearplot2 + geom_hline(yintercept = 200000, #where
                            linetype="dashed", 
                            size=1.5, #thickness
                            alpha=0.5) #transparency
-yearplot4 = yearplot3 + theme(panel.background = element_rect(fill = "white",
-                                                    colour = "grey50"),
+yearplot4 = yearplot3 + theme(panel.background = element_rect(fill = "white",colour = "grey50"),
                     plot.caption = element_text(hjust = 0), # default was 1
                     plot.title = element_text(hjust = 0.5))
-plotyear = yearplot4 + geom_bar(fill ="green",
-                        stat = 'identity')
+plotyear = yearplot4 + geom_bar(fill ="green",stat = 'identity')
 plotyear
+#####
+#####
+#Above, I tried to compute the mean for each county, but the function _mean()_ outputs a missing value (_NA_) as the result when there is one _NA_ in the column:
+# strategy 1: remove missing before computing function: na.rm=T
+tapply(eduwa$Student.Teacher.Ratio, eduwa$County, mean,na.rm=T)
+eduwa4=eduwa[complete.cases(eduwa$Student.Teacher.Ratio),]
+tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean)
+meanValues=tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean)
+hist(meanValues)
+summary(meanValues)
+hist(meanValues)
+```
 
-r2
+```{r answer}
+tapply(eduwa$Student.Teacher.Ratio, eduwa$County, mean,na.rm=T)
+eduwa4=eduwa[complete.cases(eduwa$Student.Teacher.Ratio),]
+tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean)
+meanValues=tapply(eduwa4$Student.Teacher.Ratio,eduwa4$County,mean)
+hist(meanValues)
+meanValues
+mv=as.data.frame(meanValues, row.names = levels(eduwa$County))
+mv
+yeargg
+yearord
+```
+
+```{r}
+mv=as.data.frame(meanValues)
+counties=as.data.frame(unique(eduwa$County))
+mv
+counties
+
+
+```
+
+names(mv)=c('County','Average')
+mv
+yearplot=ggplot(data= mv, aes(x=County, y=Mean))
+yearplot
 ```
 
 
