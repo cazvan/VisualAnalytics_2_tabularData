@@ -47,7 +47,7 @@ statedata=read_dta(link3)
 
 ```{r ggplot}
 # barplot
-title2="Interview Month"
+title2="Interview Year"
 source2="BRFSS Survey Data 2000-2018"
 color=rainbow(length(ToPlot)) # customizing set of colors
 year=table(brfssdata$year)
@@ -67,7 +67,7 @@ yearplot4 = yearplot3 + theme(panel.background = element_rect(fill = "white",
                                                     colour = "grey50"),
                     plot.caption = element_text(hjust = 0), # default was 1
                     plot.title = element_text(hjust = 0.5))
-plotyear = yearplot4 + geom_bar(fill ="green",
+plotyear = yearplot4 + geom_bar(fill ="grey",
                         stat = 'identity')
 plotyear
 ```
